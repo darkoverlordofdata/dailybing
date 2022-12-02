@@ -29,17 +29,18 @@ Resources/DailyBing.png
 # Header files
 #
 DailyBing_HEADER_FILES = \
-Window.h \
-Controller.h
+Source/Window.h \
+Source/AppDelegate.h
 
 #
 # Class files
 #
 DailyBing_OBJC_FILES = \
-main.m \
-Window.m \
-Controller.m
+Source/main.m \
+Source/Window.m \
+Source/AppDelegate.m
 
+OBJC_LIBS+= -ldispatch
 
 #
 # Makefiles

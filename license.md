@@ -1,6 +1,6 @@
 BSD 2-Clause License
 
-Copyright (c) 2021 bruce davidson <darkoverlordofdata@gmail.com>.
+Copyright (c) 2022 bruce davidson <darkoverlordofdata@gmail.com>.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
