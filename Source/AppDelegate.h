@@ -6,11 +6,11 @@
 
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
-#import "Window.h"
+#import "DBWindow.h"
 
 @interface AppDelegate : NSObject
 
-@property (strong, nonatomic) Window *window;
+@property (strong, nonatomic) DBWindow *window;
 
 // - (void)applicationWillFinishLaunching:(NSNotification *) not;
 - (void)applicationDidFinishLaunching:(NSNotification *) not;

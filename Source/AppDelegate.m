@@ -13,7 +13,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification;
 {
-    _window = [[Window alloc] init];
+    _window = [[DBWindow alloc] init];
     [_window setDelegate:self];
 }
 

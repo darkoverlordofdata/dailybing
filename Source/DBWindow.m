@@ -5,9 +5,9 @@
  */
 
 #import <Cocoa/Cocoa.h>
-#import "Window.h"
+#import "DBWindow.h"
 
-@implementation Window
+@implementation DBWindow
 - (instancetype)init {
 
 	[NSApp setMainMenu:[[[NSMenu alloc] init] autorelease]];
@@ -25,15 +25,14 @@
 	[[NSApp mainMenu] setSubmenu: [NSMenu new] forItem:[[NSApp mainMenu] addItemWithTitle: NSLocalizedString(@"Help", @"") action:NULL keyEquivalent: @""]];
 	[[[[NSApp mainMenu] itemArray][1] submenu] addItemWithTitle:@"About" action:@selector(orderFrontStandardAboutPanel:) keyEquivalent:@"o"];
   
-
-  pictureBox1 = [[[NSImageView alloc] initWithFrame:NSMakeRect(0, 0, 240, 135)] autorelease];
-  pictureBox2 = [[[NSImageView alloc] initWithFrame:NSMakeRect(240, 0, 240, 135)] autorelease];
-  pictureBox3 = [[[NSImageView alloc] initWithFrame:NSMakeRect(480, 0, 240, 135)] autorelease];
-  pictureBox4 = [[[NSImageView alloc] initWithFrame:NSMakeRect(720, 0, 240, 135)] autorelease];
-  pictureBox5 = [[[NSImageView alloc] initWithFrame:NSMakeRect(960, 0, 240, 135)] autorelease];
-  pictureBox6 = [[[NSImageView alloc] initWithFrame:NSMakeRect(1200, 0, 240, 135)] autorelease];
-  pictureBox7 = [[[NSImageView alloc] initWithFrame:NSMakeRect(1440, 0, 240, 135)] autorelease];
-  pictureBox8 = [[[NSImageView alloc] initWithFrame:NSMakeRect(1680, 0, 240, 135)] autorelease];
+  // pictureBox1 = [[[DBImageView alloc] initWithFrame:NSMakeRect(0, 0, 240, 135)] autorelease];
+  pictureBox2 = [[[DBImageView alloc] initWithFrame:NSMakeRect(240, 0, 240, 135)] autorelease];
+  pictureBox3 = [[[DBImageView alloc] initWithFrame:NSMakeRect(480, 0, 240, 135)] autorelease];
+  pictureBox4 = [[[DBImageView alloc] initWithFrame:NSMakeRect(720, 0, 240, 135)] autorelease];
+  pictureBox5 = [[[DBImageView alloc] initWithFrame:NSMakeRect(960, 0, 240, 135)] autorelease];
+  pictureBox6 = [[[DBImageView alloc] initWithFrame:NSMakeRect(1200, 0, 240, 135)] autorelease];
+  pictureBox7 = [[[DBImageView alloc] initWithFrame:NSMakeRect(1440, 0, 240, 135)] autorelease];
+  pictureBox8 = [[[DBImageView alloc] initWithFrame:NSMakeRect(1680, 0, 240, 135)] autorelease];
 
   [super initWithContentRect:NSMakeRect(0, 0, 1920, 140) styleMask:NSWindowStyleMaskTitled | NSWindowStyleMaskClosable | NSWindowStyleMaskMiniaturizable | NSWindowStyleMaskResizable backing:NSBackingStoreBuffered defer:NO];
   [self setTitle:@"Bing Picture Of the Day"];
@@ -47,13 +46,15 @@
   [[self contentView] addSubview:pictureBox8];
   [self setIsVisible:YES];
 
+  NSArray *numList = @[[NSNumber numberWithInt: 0], [NSNumber numberWithInt: 0], [NSNumber numberWithInt: 0]];
+
 
   NSString *bingUrl= @"https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=8&mkt=en-US";
   NSURL *url = [NSURL URLWithString:bingUrl]; 
   NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url                
         cachePolicy:NSURLRequestReloadIgnoringCacheData  timeoutInterval:60]; 
 
-  NSURLResponse *response = [[NSError alloc] init];
+  NSURLResponse *response = [[NSURLResponse alloc] init];
   NSError *error = [[NSError alloc] init]; 
   NSError *jsonErr = [[NSError alloc] init]; 
 
@@ -90,25 +91,14 @@
   NSURL *url7 = [NSURL URLWithString:imageUrl7 relativeToURL:baseUrl];
   NSURL *url8 = [NSURL URLWithString:imageUrl8 relativeToURL:baseUrl];
 
-  NSLog(@"url1 = %@", url1);
-  NSLog(@"url2 = %@", url2);
-  NSLog(@"url3 = %@", url3);
-  NSLog(@"url4 = %@", url4);
-  NSLog(@"url5 = %@", url5);
-  NSLog(@"url6 = %@", url6);
-  NSLog(@"url7 = %@", url7);
-  NSLog(@"url8 = %@", url8);
-
-
-
-  // NSURL *url1 = [NSURL URLWithString:@"https://www.bing.com/th?id=OHR.RovinjCroatia_EN-US9834093615_1920x1080.jpg&rf=LaDigue_1920x1080.jpg&pid=hp"];
-  // NSURL *url2 = [NSURL URLWithString:@"https://www.bing.com/th?id=OHR.HeronGiving_EN-US9774285216_1920x1080.jpg&rf=LaDigue_1920x1080.jpg&pid=hp"];
-  // NSURL *url3 = [NSURL URLWithString:@"https://www.bing.com/th?id=OHR.RedPlanetDay_EN-US9693219784_1920x1080.jpg&rf=LaDigue_1920x1080.jpg&pid=hp"];
-  // NSURL *url4 = [NSURL URLWithString:@"https://www.bing.com/th?id=OHR.Cecropia_EN-US9602789937_1920x1080.jpg&rf=LaDigue_1920x1080.jpg&pid=hp"];
-  // NSURL *url5 = [NSURL URLWithString:@"https://www.bing.com/th?id=OHR.OliveTreeDay_EN-US9460125670_1920x1080.jpg&rf=LaDigue_1920x1080.jpg&pid=hp"];
-  // NSURL *url6 = [NSURL URLWithString:@"https://www.bing.com/th?id=OHR.MonksMound_EN-US9323884241_1920x1080.jpg&rf=LaDigue_1920x1080.jpg&pid=hp"];
-  // NSURL *url7 = [NSURL URLWithString:@"https://www.bing.com/th?id=OHR.CranberryBog_EN-US4145520322_1920x1080.jpg&rf=LaDigue_1920x1080.jpg&pid=hp"];
-  // NSURL *url8 = [NSURL URLWithString:@"https://www.bing.com/th?id=OHR.HelianthusAnnuus_EN-US9168789034_1920x1080.jpg&rf=LaDigue_1920x1080.jpg&pid=hp"];
+  // NSLog(@"url1 = %@", url1);
+  // NSLog(@"url2 = %@", url2);
+  // NSLog(@"url3 = %@", url3);
+  // NSLog(@"url4 = %@", url4);
+  // NSLog(@"url5 = %@", url5);
+  // NSLog(@"url6 = %@", url6);
+  // NSLog(@"url7 = %@", url7);
+  // NSLog(@"url8 = %@", url8);
 
   dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 
@@ -123,8 +113,12 @@
   return self;
 }
 
+- (void) onSelect:(DBImageView*)sender {
+  NSLog(@"Selected!!!");
+}
+
 // https://stackoverflow.com/questions/8332897/simple-http-request-in-gnusteps-objective-c-not-working
-- (void) fetchUrl:(NSURL *)url on:(NSImageView *) view {
+- (void) fetchUrl:(NSURL *)url on:(DBImageView *) view {
 
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url                
         cachePolicy:NSURLRequestReloadIgnoringCacheData  

@@ -6,7 +6,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "AppDelegate.h"
-#import "Window.h"
+#import "DBWindow.h"
 
 
 int main(int argc, const char *argv[]) 

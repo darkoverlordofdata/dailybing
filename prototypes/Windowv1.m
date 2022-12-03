@@ -1,9 +1,9 @@
 #import <Cocoa/Cocoa.h>
 #import "./NSPatch/NSPatch.h"
 
-#import "Window.h"
+#import "DBWindow.h"
 
-@implementation Window
+@implementation DBWindow
 - (instancetype)init {
 
 	[NSApp setMainMenu:[[[NSMenu alloc] init] autorelease]];

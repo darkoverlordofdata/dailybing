@@ -1,12 +1,12 @@
 #import <Cocoa/Cocoa.h>
-#import "Window.h"
+#import "DBWindow.h"
 
 #define LOCAL "/home/darko/Documents/GitHub/DailyBing/Resources/%@"
 
 // https://stackoverflow.com/questions/8332897/simple-http-request-in-gnusteps-objective-c-not-working
 //https://sudonull.com/post/138081-US-Visa-My-First-iPhone-App
 
-@implementation Window
+@implementation DBWindow
 - (instancetype)init {
 
   pictureBox1 = [[[NSImageView alloc] initWithFrame:NSMakeRect(0, 0, 240, 135)] autorelease];

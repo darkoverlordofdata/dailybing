@@ -14,6 +14,6 @@ set(MACOSX_BUNDLE_GUI_IDENTIFIER "org.darkoverlordofdata.dailybing")
 set_source_files_properties(Resources/DailyBing.png PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
 # Application
-add_executable(${PROJECT_NAME} MACOSX_BUNDLE main.m Controller.m Window.m  Resources/Logo.png)
+add_executable(${PROJECT_NAME} MACOSX_BUNDLE main.m Controller.m DBWindow.m  Resources/Logo.png)
 target_link_libraries(${PROJECT_NAME} ${COCOA_LIBRARY})
 set_target_properties(${PROJECT_NAME} PROPERTIES FOLDER ".")

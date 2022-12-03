@@ -29,7 +29,8 @@ Resources/DailyBing.png
 # Header files
 #
 DailyBing_HEADER_FILES = \
-Source/Window.h \
+Source/DBWindow.h \
+Source/DBImageView.h \
 Source/AppDelegate.h
 
 #
@@ -37,7 +38,8 @@ Source/AppDelegate.h
 #
 DailyBing_OBJC_FILES = \
 Source/main.m \
-Source/Window.m \
+Source/DBWindow.m \
+Source/DBImageView.m \
 Source/AppDelegate.m
 
 OBJC_LIBS+= -ldispatch
