@@ -23,8 +23,12 @@ DailyBing_APPLICATION_ICON = DailyBing.png
 # Resource files
 #
 DailyBing_RESOURCE_FILES = \
+Resources/gallery/.gitkeep  \
+Resources/themes/.gitkeep  \
+Resources/avatar.png  \
+Resources/catlock.png  \
+Resources/catlock.py  \
 Resources/DailyBing.png 
-
 #
 # Header files
 #

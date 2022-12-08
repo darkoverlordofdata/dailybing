@@ -22,6 +22,7 @@
 
 }
 
+- (NSImage*)resizeImage:(NSImage*)input by:(CGFloat)factor;
 - (instancetype)init;
 - (BOOL)windowShouldClose:(id)sender;
 - (void) fetchUrl:(NSURL *)url on:(DBImageView *) view;
