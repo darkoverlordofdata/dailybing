@@ -23,11 +23,10 @@ DailyBing_APPLICATION_ICON = DailyBing.png
 # Resource files
 #
 DailyBing_RESOURCE_FILES = \
-Resources/imageCache.plist \
 Resources/avatar.png  \
 Resources/catlock.png  \
 Resources/catlock.py  \
-Resources/DailyBing.png
+Resources/DailyBing.png 
 #
 # Header files
 #
@@ -35,8 +34,7 @@ DailyBing_HEADER_FILES = \
 Source/DBWindow.h \
 Source/DBImageView.h \
 Source/AppDelegate.h \
-Source/NSImage+SaveAs.h \
-Source/ResourceManager.h
+Source/NSImage+SaveAs.h
 
 #
 # Class files
@@ -46,8 +44,7 @@ Source/main.m \
 Source/DBWindow.m \
 Source/DBImageView.m \
 Source/AppDelegate.m \
-Source/NSImage+SaveAs.m \
-Source/ResourceManager.m
+Source/NSImage+SaveAs.m
 
 OBJC_LIBS+= -ldispatch
 

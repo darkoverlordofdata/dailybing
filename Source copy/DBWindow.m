@@ -12,18 +12,6 @@
 @implementation DBWindow
 - (instancetype)init {
 
-  // NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"imageCache" ofType:@"plist"]; 
-  // NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithContentsOfFile:plistPath]; 
-  // dict[@"Name"] = @"Frodo";
-  // NSLog(@"%@", dict);
-  // [dict writeToFile:plistPath atomically:YES];
-  // for (NSDictionary *d in a)
-
-  // NSString *s1 = [[ResourceManager sharedManager] resourcePath];
-  // NSString *s2 = [[NSBundle mainBundle] pathForResource:@"avatar" ofType:@"png"]; 
-
-  // NSLog(@"s1 = %@", s1);
-  // NSLog(@"s2 = %@", s2);
 
 	[NSApp setMainMenu:[[[NSMenu alloc] init] autorelease]];
 
@@ -39,9 +27,7 @@
    
 	[[NSApp mainMenu] setSubmenu: [NSMenu new] forItem:[[NSApp mainMenu] addItemWithTitle: NSLocalizedString(@"Help", @"") action:NULL keyEquivalent: @""]];
 	[[[[NSApp mainMenu] itemArray][1] submenu] addItemWithTitle:@"About" action:@selector(orderFrontStandardAboutPanel:) keyEquivalent:@"o"];
-
-
-  NSString *bingUrl= @"https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=8&mkt=en-US";
+    NSString *bingUrl= @"https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=8&mkt=en-US";
   NSURL *url = [NSURL URLWithString:bingUrl]; 
   NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url                
         cachePolicy:NSURLRequestReloadIgnoringCacheData  timeoutInterval:60]; 
@@ -179,15 +165,7 @@
           @"Resources/gallery",
           [sender.urlBase substringFromIndex:11],
           @".jpeg"];
-
   NSLog(@"wallpaperPicture = %@", wallpaperPicture);
-
-  NSString *s0 = [[NSBundle mainBundle] pathForResource:@"avatar" ofType:@"png"]; 
-  NSLog(@"s0 = %@", s0);
-  NSString *wp = [[NSBundle mainBundle] pathForResource:@"[sender.urlBase substringFromIndex:11]" ofType:@"jpeg" inDirectory:@"gallery"];
-  NSLog(@"wp = %@", wp);
-  NSString *p1 = [[NSBundle mainBundle] pathForResource:@"" ofType:@""]; 
-  NSLog(@"p1 = %@", p1);
 
   [img saveAsJpegWithName: wallpaperPicture];
   //https://www.oreilly.com/library/view/programming-in-objective-c/9780133756937/ch16lev1sec3.html
@@ -287,7 +265,6 @@
 // https://stackoverflow.com/questions/8332897/simple-http-request-in-gnusteps-objective-c-not-working
 - (void) fetchUrl:(NSURL *)url on:(DBImageView *) view {
 
-    fetchUrlCount++;
 
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url                
         cachePolicy:NSURLRequestReloadIgnoringCacheData  
@@ -298,13 +275,7 @@
     NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error]; 
     NSImage *img = [[NSImage alloc] initWithData: data];
     [view setImage:img];
-    fetchUrlCount--;
-    
-    if (fetchUrlCount < 1) [self onFetchUrlComplete];
-}
 
-- (void) onFetchUrlComplete {
-    NSLog(@"All Fetch Complete %i",fetchUrlCount);
 }
 
 - (BOOL)windowShouldClose:(id)sender {

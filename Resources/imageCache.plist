@@ -1,0 +1,13 @@
+{
+    Count = 8;
+    Images = (
+        "AntarcticaDay_EN-US9921573438",
+        "BraidedRiverDelta_EN-US0693594934",
+        "FlorenceAerial_EN-US1751882328",
+        "GreatEgret_EN-US1489292796",
+        "KaneoheHI_EN-US1621373073",
+        "KilimanjaroElephants_EN-US1249382486",
+        "MiamiDT_EN-US0878462019",
+        "StNick_EN-US1370158441"     
+    );
+}
