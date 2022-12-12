@@ -8,6 +8,7 @@
 #import "DBWindow.h"
 #import "NSImage+SaveAs.h"
 
+#define NUM_PICS 8
 
 @implementation DBWindow
 - (instancetype)init {
@@ -24,6 +25,8 @@
 
   // NSLog(@"s1 = %@", s1);
   // NSLog(@"s2 = %@", s2);
+
+  
 
 	[NSApp setMainMenu:[[[NSMenu alloc] init] autorelease]];
 
@@ -55,66 +58,35 @@
   NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonErr];
   NSArray *images = [json valueForKey:@"images"];
 
+  NSMutableArray *picbox = [NSMutableArray arrayWithCapacity:NUM_PICS];
+  NSMutableArray *imageN = [NSMutableArray arrayWithCapacity:NUM_PICS];
+  NSMutableArray *imageUrlN = [NSMutableArray arrayWithCapacity:NUM_PICS];
+  NSMutableArray *urlN = [NSMutableArray arrayWithCapacity:NUM_PICS];
 
-  NSDictionary *image1 = [images objectAtIndex: 0];
-  NSString *imageUrl1 = [image1 valueForKey:@"url"];
-  NSDictionary *image2 = [images objectAtIndex: 1];
-  NSString *imageUrl2 = [image2 valueForKey:@"url"];
-  NSDictionary *image3 = [images objectAtIndex: 2];
-  NSString *imageUrl3 = [image3 valueForKey:@"url"];
-  NSDictionary *image4 = [images objectAtIndex: 3];
-  NSString *imageUrl4 = [image4 valueForKey:@"url"];
-  NSDictionary *image5 = [images objectAtIndex: 4];
-  NSString *imageUrl5 = [image5 valueForKey:@"url"];
-  NSDictionary *image6 = [images objectAtIndex: 5];
-  NSString *imageUrl6 = [image6 valueForKey:@"url"];
-  NSDictionary *image7 = [images objectAtIndex: 6];
-  NSString *imageUrl7 = [image7 valueForKey:@"url"];
-  NSDictionary *image8 = [images objectAtIndex: 7];
-  NSString *imageUrl8 = [image8 valueForKey:@"url"];
-
-  pictureBox1 = [[DBImageView alloc] initWithIndex: 0 data:image1];
-  pictureBox2 = [[DBImageView alloc] initWithIndex: 1 data:image2];
-  pictureBox3 = [[DBImageView alloc] initWithIndex: 2 data:image3];
-  pictureBox4 = [[DBImageView alloc] initWithIndex: 3 data:image4];
-  pictureBox5 = [[DBImageView alloc] initWithIndex: 4 data:image5];
-  pictureBox6 = [[DBImageView alloc] initWithIndex: 5 data:image6];
-  pictureBox7 = [[DBImageView alloc] initWithIndex: 6 data:image7];
-  pictureBox8 = [[DBImageView alloc] initWithIndex: 7 data:image8];
-
+  for(int i = 0; i<NUM_PICS; i++){
+      imageN[i] = [images objectAtIndex: i];
+      imageUrlN[i] = [imageN[i] valueForKey:@"url"];
+      picbox[i] =  [[DBImageView alloc] initWithIndex: i data:imageN[i]];
+  }
 
   [super initWithContentRect:NSMakeRect(0, 0, 1920, 140) styleMask:NSWindowStyleMaskTitled | NSWindowStyleMaskClosable | NSWindowStyleMaskMiniaturizable | NSWindowStyleMaskResizable backing:NSBackingStoreBuffered defer:NO];
   [self setTitle:@"Bing Picture Of the Day"];
-  [[self contentView] addSubview:pictureBox1];
-  [[self contentView] addSubview:pictureBox2];
-  [[self contentView] addSubview:pictureBox3];
-  [[self contentView] addSubview:pictureBox4];
-  [[self contentView] addSubview:pictureBox5];
-  [[self contentView] addSubview:pictureBox6];
-  [[self contentView] addSubview:pictureBox7];
-  [[self contentView] addSubview:pictureBox8];
+  for(int i = 0; i<NUM_PICS; i++){
+    [[self contentView] addSubview:picbox[i]];
+  }
+
   [self setIsVisible:YES];
 
   NSURL *baseUrl = [NSURL URLWithString:@"https://www.bing.com"];
-  NSURL *url1 = [NSURL URLWithString:imageUrl1 relativeToURL:baseUrl];
-  NSURL *url2 = [NSURL URLWithString:imageUrl2 relativeToURL:baseUrl];
-  NSURL *url3 = [NSURL URLWithString:imageUrl3 relativeToURL:baseUrl];
-  NSURL *url4 = [NSURL URLWithString:imageUrl4 relativeToURL:baseUrl];
-  NSURL *url5 = [NSURL URLWithString:imageUrl5 relativeToURL:baseUrl];
-  NSURL *url6 = [NSURL URLWithString:imageUrl6 relativeToURL:baseUrl];
-  NSURL *url7 = [NSURL URLWithString:imageUrl7 relativeToURL:baseUrl];
-  NSURL *url8 = [NSURL URLWithString:imageUrl8 relativeToURL:baseUrl];
+  for(int i = 0; i<NUM_PICS; i++){
+      urlN[i] = [NSURL URLWithString:imageUrlN[i] relativeToURL:baseUrl];
+  }
 
   dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+  for(int i = 0; i<NUM_PICS; i++){
+    dispatch_async(queue, ^{ [self fetchUrl:urlN[i] on:picbox[i]]; });
+  }
 
-  dispatch_async(queue, ^{ [self fetchUrl:url1 on:pictureBox1]; });
-  dispatch_async(queue, ^{ [self fetchUrl:url2 on:pictureBox2]; });
-  dispatch_async(queue, ^{ [self fetchUrl:url3 on:pictureBox3]; });
-  dispatch_async(queue, ^{ [self fetchUrl:url4 on:pictureBox4]; });
-  dispatch_async(queue, ^{ [self fetchUrl:url5 on:pictureBox5]; });
-  dispatch_async(queue, ^{ [self fetchUrl:url6 on:pictureBox6]; });
-  dispatch_async(queue, ^{ [self fetchUrl:url7 on:pictureBox7]; });
-  dispatch_async(queue, ^{ [self fetchUrl:url8 on:pictureBox8]; });
 
   NSSize resolution =  [[NSScreen mainScreen] frame].size;
   NSLog(@"resolution = %fx%f", resolution.width, resolution.height);
@@ -288,10 +260,11 @@
 - (void) fetchUrl:(NSURL *)url on:(DBImageView *) view {
 
     fetchUrlCount++;
+    NSLog(@"fetch %i %@", fetchUrlCount, [url absoluteString]);
 
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url                
         cachePolicy:NSURLRequestReloadIgnoringCacheData  
-            timeoutInterval:60]; 
+            timeoutInterval:60.0]; 
     NSURLResponse *response; 
     NSError *error =  [[NSError alloc] init]; 
 
@@ -299,7 +272,7 @@
     NSImage *img = [[NSImage alloc] initWithData: data];
     [view setImage:img];
     fetchUrlCount--;
-    
+
     if (fetchUrlCount < 1) [self onFetchUrlComplete];
 }
 

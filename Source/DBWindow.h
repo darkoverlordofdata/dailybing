@@ -13,16 +13,6 @@
 
 @interface DBWindow : NSWindow {
   int fetchUrlCount;
-  DBImageView *pictureBox1;
-  DBImageView *pictureBox2;
-  DBImageView *pictureBox3;
-  DBImageView *pictureBox4;
-  DBImageView *pictureBox5;
-  DBImageView *pictureBox6;
-  DBImageView *pictureBox7;
-  DBImageView *pictureBox8;
-
-
 }
 
 - (NSImage*) resizeImage:(NSImage*)input by:(CGFloat)factor;
