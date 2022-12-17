@@ -95,6 +95,16 @@ didReceiveResponse:(NSURLResponse *)response
   // Unfortunately, it appears that NSURLSession is not fully implemented :()
   NSURLConnection *con = [[NSURLConnection alloc] initWithRequest:request delegate:self];
 
+  // NSLog(@"NSURLSessionConfiguration");
+  // NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+  // NSLog(@"NSURLSession");
+  // NSURLSession *session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
+  // NSLog(@"NSURLSessionDataTask");
+
+  // NSURLSessionDataTask *task = [session dataTaskWithURL:[NSURL URLWithString:bingUrl]];
+  // NSLog(@"done");
+  // return self;
+
   NSURLResponse *response = [[NSURLResponse alloc] init];
   NSError *error = [[NSError alloc] init]; 
   NSError *jsonErr = [[NSError alloc] init]; 
