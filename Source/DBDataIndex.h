@@ -5,24 +5,18 @@
  */
 
 #import <Cocoa/Cocoa.h>
-#import "DBWindow.h"
-#import "NSImage+SaveAs.h"
 
 @class DBWindow;
 
 
-@interface DBImageView : NSImageView <NSURLConnectionDelegate> {
+@interface DBDataIndex : NSObject<NSURLConnectionDelegate> {
     NSMutableData *responseData;
-
+    NSMutableArray *imageView; //DBImageView
 }
 
-@property (strong, nonatomic) NSString *url;
-@property (strong, nonatomic) NSString *desc; //copyright
-@property (strong, nonatomic) NSString *title;
-@property (strong, nonatomic) NSString *urlBase;
+@property (strong, nonatomic) DBWindow *parent;
 
-- (instancetype)initWithIndex:(int)index data:(NSDictionary *) data;
-- (void)onSelectImage;
+- (instancetype)initWithParent: (DBWindow*) parent;
 
 //  NSURLConnectionDelegate
 - (void)connection:(NSURLConnection*)connection didReceiveResponse:(NSURLResponse *)response;

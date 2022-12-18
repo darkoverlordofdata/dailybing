@@ -33,6 +33,7 @@ Resources/DailyBing.png
 #
 DailyBing_HEADER_FILES = \
 Source/DBWindow.h \
+Source/DBDataIndex.h \
 Source/DBImageView.h \
 Source/AppDelegate.h \
 Source/NSImage+SaveAs.h \
@@ -44,6 +45,7 @@ Source/ResourceManager.h
 DailyBing_OBJC_FILES = \
 Source/main.m \
 Source/DBWindow.m \
+Source/DBDataIndex.m \
 Source/DBImageView.m \
 Source/AppDelegate.m \
 Source/NSImage+SaveAs.m \
