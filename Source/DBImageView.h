@@ -20,6 +20,7 @@
 @property (strong, nonatomic) NSString *desc; //copyright
 @property (strong, nonatomic) NSString *title;
 @property (strong, nonatomic) NSString *urlBase;
+@property (strong, nonatomic) NSString *resourcePath;
 
 - (instancetype)initWithIndex:(int)index data:(NSDictionary *) data;
 - (void)onSelectImage;

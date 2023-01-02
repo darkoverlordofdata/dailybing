@@ -13,9 +13,12 @@
 @synthesize desc = _desc;
 @synthesize title = _title;
 @synthesize urlBase = _urlBase;
+@synthesize resourcePath = _resourcePath;
 
 - (instancetype)initWithIndex:(int)index data:(NSDictionary *) data
 {
+    _resourcePath = [[NSBundle mainBundle] bundlePath]; 
+
     [[self initWithFrame:NSMakeRect(index*240, 0, 240, 135)] autorelease];
 
     _url = [[NSString alloc]initWithString:[data valueForKey:@"url"]];
@@ -24,8 +27,6 @@
     _urlBase = [[NSString alloc] initWithString:[data valueForKey:@"urlbase"]];
 
     NSURL *url = [NSURL URLWithString:_url relativeToURL:[NSURL URLWithString:@"https://www.bing.com"]];
-
-    // NSLog(@"%@", [url absoluteString]);
 
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url                
         cachePolicy:NSURLRequestReloadIgnoringCacheData  timeoutInterval:60];
@@ -39,15 +40,12 @@
 - (void)mouseDown:(NSEvent *)theEvent
 {
     NSInteger clickCount = [theEvent clickCount];
-    // NSLog(@"on mouseDown!!!");
-
     if (clickCount > 1) {
         [self onSelectImage];
     }
 }
 
 - (void)onSelectImage {
-    // NSLog(@"onSelectImage");
     NSData *url = [_url dataUsingEncoding:NSUTF8StringEncoding];
     NSData *desc = [_desc dataUsingEncoding:NSUTF8StringEncoding];
     NSData *title = [_title dataUsingEncoding:NSUTF8StringEncoding];
@@ -55,6 +53,10 @@
     NSArray *argv = [[NSProcessInfo processInfo] arguments];
     NSString *arg1 = (NSString*)argv[0];
     NSString *pwd = [arg1 stringByDeletingLastPathComponent];
+
+//   NSString *s0 = [_resourcePath pathForResource:@"avatar" ofType:@"png"]; 
+//   NSString *wp = [_resourcePath pathForResource:@"[sender.urlBase substringFromIndex:11]" ofType:@"jpeg" inDirectory:@"gallery"];
+
 
     NSString *gallery = [NSString stringWithFormat:@"%@/%@", pwd, @"Resources/gallery"];
     NSString *themes = [NSString stringWithFormat:@"%@/%@", pwd, @"Resources/themes"];
@@ -67,6 +69,7 @@
             pwd, 
             @"Resources/gallery",
             [_urlBase substringFromIndex:11]]; 
+
     NSString *wallpaperPicture = [NSString stringWithFormat:@"%@/%@/%@%@", 
             pwd, 
             @"Resources/gallery",
@@ -143,7 +146,6 @@
 }
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    NSLog(@"connectionDidFinishLoading");
     NSImage *img = [[NSImage alloc] initWithData: responseData];
     [self setImage:img];
 
