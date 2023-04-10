@@ -1,43 +1,30 @@
 ## Notes
 
-### top loop
-top loop is a NSURLConnectionDelegate to load ths main json doc from the server.
+### todo
 
-### detail loop
-next level loops through the json data of images and downloads each using another NSURLConnectionDelegate
+where to get user name?
 
-DBWindow.m - mainwindow
-DBDataIndex.m - loads the json, requests 8 DBImageView objects
-DBImageView.m - 1 ea download & display the image
+save image meta-data in plist?
 
+### new design
 
-NSWindowStyleMaskBorderless
-NSWindowStyleMaskClosable
-NSWindowStyleMaskFullScreen
-NSWindowStyleMaskMiniaturizable
-NSWindowStyleMaskResizable
-NSWindowStyleMaskTitled
-NSWindowStyleMaskUtilityWindow
-NSWindowStyleMaskFullSizeContentView
+1 program does both - download images & lock screen
 
-  NSString *s0 = [[NSBundle mainBundle] pathForResource:@"avatar" ofType:@"png"]; 
-  NSLog(@"s0 = %@", s0);
-  NSString *wp = [[NSBundle mainBundle] pathForResource:@"[sender.urlBase substringFromIndex:11]" ofType:@"jpeg" inDirectory:@"gallery"];
-  NSLog(@"wp = %@", wp);
-  NSString *p1 = [[NSBundle mainBundle] pathForResource:@"" ofType:@""]; 
-  NSLog(@"p1 = %@", p1);
+DailyBing
+DailyBing --schedule --at 03:01
+DailyBing --lockscreen --pin 123456
+
+where --lockscreen is nonfunctional, use CatLock.py
 
 
-  // NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"imageCache" ofType:@"plist"]; 
-  // NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithContentsOfFile:plistPath]; 
-  // dict[@"Name"] = @"Frodo";
-  // NSLog(@"%@", dict);
-  // [dict writeToFile:plistPath atomically:YES];
-  // for (NSDictionary *d in a)
 
-  // NSString *s1 = [[ResourceManager sharedManager] resourcePath];
-  // NSString *s2 = [[NSBundle mainBundle] pathForResource:@"avatar" ofType:@"png"]; 
+defaults write NSGlobalDomain GSUseIconManager NO
+defaults write NSGlobalDomain GSSuppressAppIcon YES
+defaults write NSGlobalDomain GSTheme NesedahRik
 
-  // NSLog(@"s1 = %@", s1);
-  // NSLog(@"s2 = %@", s2);
+defaults write NSGlobalDomain NSMenuInterfaceStyle NSNextStepInterfaceStyle
+defaults write NSGlobalDomain NSMenuInterfaceStyle NSMacintoshInterfaceStyle
+defaults write NSGlobalDomain NSMenuInterfaceStyle NSWindows95InterfaceStyle
 
+
+/usr/GNUstep/Local/Applications/DailyBing.app/Resources/catlock.py "-p" "420420"

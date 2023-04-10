@@ -14,7 +14,6 @@
 
 @synthesize parent = _parent;
 
-//   NSString *imageUrl1 = [image1 valueForKey:@"url"];
 
 - (instancetype)initWithParent: (DBWindow*) parent
 {
@@ -26,7 +25,7 @@
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url                
         cachePolicy:NSURLRequestReloadIgnoringCacheData  timeoutInterval:60];
 
-    // NSURLConnection *con = 
+
     [[NSURLConnection alloc] initWithRequest:request delegate:self];
 
     return self;
@@ -50,9 +49,9 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
     NSError *jsonErr = [[NSError alloc] init]; 
-    // Do something with responseData
+
     NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableContainers error:&jsonErr];
-    // NSLog(@"%@", json);
+
     NSArray *images = [json valueForKey:@"images"];
 
     imageView = [NSMutableArray arrayWithCapacity:NUM_PICS];

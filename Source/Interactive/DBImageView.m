@@ -96,15 +96,27 @@
     [fh closeFile];
 
     // run external process to update the wallpaper location
-    // if ([@"ubuntu:GNOME" isEqualToString:desktop])
+    if ([[NSFileManager defaultManager] fileExistsAtPath: @"/usr/local/bin/launch"]) {
 
-    [NSTask launchedTaskWithLaunchPath:@"/usr/bin/dconf" 
-            arguments:@[ 
-                @"write", 
-                @"/org/gnome/desktop/background/picture-uri", 
-                [NSString stringWithFormat:@"\"file:\\%@\"", wallpaperPicture]
-                ]];
+        // helloSystem
+        NSLog(@"/usr/local/bin/launch Filer --set-wallpaper %@", [NSString stringWithFormat:@"%@", wallpaperPicture]);
+        [NSTask launchedTaskWithLaunchPath:@"/usr/local/bin/launch" 
+                arguments:@[ 
+                    @"/usr/local/bin/launch",
+                    @"Filer",
+                    @"--set-wallpaper", 
+                    [NSString stringWithFormat:@"%@", wallpaperPicture]
+                    ]];
+    } else {
 
+        // Vanilla Gnome
+        [NSTask launchedTaskWithLaunchPath:@"/usr/bin/dconf" 
+                arguments:@[ 
+                    @"write", 
+                    @"/org/gnome/desktop/background/picture-uri", 
+                    [NSString stringWithFormat:@"\"file:\\%@\"", wallpaperPicture]
+                    ]];
+    }
 
     NSString *description = [NSString stringWithFormat:@"%@/%@", 
             pwd, 
@@ -128,6 +140,8 @@
     [fd writeData:[@"\n" dataUsingEncoding:NSUTF8StringEncoding]];
     [fd writeData:desc];
     [fd closeFile];
+
+
 }
 
 //NSURLConnectionDelegate protocol
@@ -147,6 +161,8 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
     NSImage *img = [[NSImage alloc] initWithData: responseData];
+
+    [self setToolTip:_desc];
     [self setImage:img];
 
 }

@@ -10,6 +10,10 @@ endif
 
 include $(GNUSTEP_MAKEFILES)/common.make
 
+_SYS := $(shell uname 2>/dev/null || echo Unknown)
+_SYS := $(patsubst MSYS%,MSYS,$(_SYS))
+_SYS := $(patsubst MINGW%,MinGW,$(_SYS))
+
 #
 # DailyBing
 #
@@ -27,31 +31,56 @@ Resources/imageCache.plist \
 Resources/avatar.png  \
 Resources/catlock.png  \
 Resources/catlock.py  \
-Resources/DailyBing.png
+Resources/DailyBing.png \
+Resources/LockScreen  \
+
 #
 # Header files
 #
 DailyBing_HEADER_FILES = \
-Source/DBWindow.h \
-Source/DBDataIndex.h \
-Source/DBImageView.h \
 Source/AppDelegate.h \
-Source/NSImage+SaveAs.h \
-Source/ResourceManager.h
+Source/Interactive/DBWindow.h \
+Source/Interactive/DBDataIndex.h \
+Source/Interactive/DBImageView.h \
+Source/Interactive/NSImage+SaveAs.h \
+Source/LockScreen/BackView.h \
+Source/LockScreen/LockWindow.h \
+Source/LockScreen/NSImage+ProportionalScaling.h \
+
 
 #
 # Class files
 #
 DailyBing_OBJC_FILES = \
 Source/main.m \
-Source/DBWindow.m \
-Source/DBDataIndex.m \
-Source/DBImageView.m \
 Source/AppDelegate.m \
-Source/NSImage+SaveAs.m \
-Source/ResourceManager.m
+Source/Interactive/DBWindow.m \
+Source/Interactive/DBDataIndex.m \
+Source/Interactive/DBImageView.m \
+Source/Interactive/NSImage+SaveAs.m \
+Source/LockScreen/BackView.m \
+Source/LockScreen/LockWindow.m \
+Source/LockScreen/NSImage+ProportionalScaling.m \
 
+ifneq ($(filter $(_SYS),MSYS MinGW),)
 OBJC_LIBS+= -ldispatch
+endif
+
+ifeq ($(_SYS),Linux)
+OBJC_LIBS+= -ldispatch
+endif
+
+ifeq ($(_SYS),Darwin)
+endif
+
+ifeq ($(_SYS),FreeBSD)
+endif
+
+ifeq ($(_SYS),NetBSD)
+endif
+
+ifeq ($(_SYS),OpenBSD)
+endif
 
 #
 # Makefiles

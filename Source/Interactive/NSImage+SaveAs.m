@@ -24,7 +24,7 @@
 
 @implementation NSImage(saveAsPngWithName)
 - (void) saveAsPngWithName:(NSString*) fileName
-{//
+{
     // Cache the reduced image
     NSData *imageData = [self TIFFRepresentation];
     NSBitmapImageRep *imageRep = [NSBitmapImageRep imageRepWithData:imageData];
