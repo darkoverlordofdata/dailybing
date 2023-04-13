@@ -38,14 +38,15 @@ Resources/LockScreen  \
 # Header files
 #
 DailyBing_HEADER_FILES = \
+Source/Extensions/NSImage+ProportionalScaling.h \
+Source/Extensions/NSImage+ResizeImage.h \
+Source/Extensions/NSImage+SaveAs.h \
 Source/AppDelegate.h \
 Source/Interactive/DBWindow.h \
 Source/Interactive/DBDataIndex.h \
 Source/Interactive/DBImageView.h \
-Source/Interactive/NSImage+SaveAs.h \
 Source/LockScreen/BackView.h \
 Source/LockScreen/LockWindow.h \
-Source/LockScreen/NSImage+ProportionalScaling.h \
 
 
 #
@@ -53,14 +54,15 @@ Source/LockScreen/NSImage+ProportionalScaling.h \
 #
 DailyBing_OBJC_FILES = \
 Source/main.m \
+Source/Extensions/NSImage+ProportionalScaling.m \
+Source/Extensions/NSImage+ResizeImage.m \
+Source/Extensions/NSImage+SaveAs.m \
 Source/AppDelegate.m \
 Source/Interactive/DBWindow.m \
 Source/Interactive/DBDataIndex.m \
 Source/Interactive/DBImageView.m \
-Source/Interactive/NSImage+SaveAs.m \
 Source/LockScreen/BackView.m \
 Source/LockScreen/LockWindow.m \
-Source/LockScreen/NSImage+ProportionalScaling.m \
 
 ifneq ($(filter $(_SYS),MSYS MinGW),)
 OBJC_LIBS+= -ldispatch

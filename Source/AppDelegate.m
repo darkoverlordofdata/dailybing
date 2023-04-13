@@ -9,6 +9,13 @@
 @implementation AppDelegate
 
 @synthesize window = _window;
+@synthesize help = _help;
+@synthesize version = _version;
+@synthesize schedule = _schedule;
+@synthesize lockscreen = _lockscreen;
+@synthesize pin = _pin;
+@synthesize at = _at;
+
 
 - (instancetype)initWithFlags:(BOOL)help version:(BOOL)version schedule:(BOOL)schedule lockscreen:(BOOL)lockscreen pin:(NSString*)pin at:(NSString*)at
 {
@@ -50,7 +57,7 @@
      */
     } else if (_lockscreen) {
 
-        _window = [LockWindow new];
+        _window = [[LockWindow alloc] init];
         [_window setDelegate:self];
 
     /**

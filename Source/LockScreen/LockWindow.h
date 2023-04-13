@@ -1,6 +1,9 @@
 #import <Cocoa/Cocoa.h>
-#import "NSImage+ProportionalScaling.h"
+#import "../Extensions/NSImage+ProportionalScaling.h"
 #import "BackView.h"
+#import "../AppDelegate.h"
+
+@class AppDelegate;
 
 @interface LockWindow : NSWindow 
 {
@@ -23,7 +26,10 @@
   NSTextField* currentTime;
   NSTextField* instructions;
 }
+
+
 - (instancetype)init;
+// - (instancetype)initWithParent: (AppDelegate*) parent;
 - (BOOL)windowShouldClose:(id)sender;
 - (void)onTimerTick:(NSTimer*)timer;
 - (void)onTimerQuit:(NSTimer*)timer;

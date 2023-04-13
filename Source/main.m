@@ -58,11 +58,9 @@ int main(int argc, char *argv[])
 
         case 'a':
             at = [NSString stringWithCString:optarg];
-            // at = strdup(optarg);
             break;
         case 'p':
             pin = [NSString stringWithCString:optarg];
-            // pin = strdup(optarg);
             break;
 
         }

@@ -8,9 +8,9 @@
             "type": "lldb",
             "request": "launch",
             "name": "Debug",
-            "program": "${workspaceFolder}/${workspaceFolderBasename}.app/${workspaceFolderBasename}",
+            "program": "${workspaceFolder}/DailyBing.app/DailyBing",
             "args": [],
-            "cwd": "${workspaceFolder}/${workspaceFolderBasename}.app"
+            "cwd": "${workspaceFolder}/DailyBing.app"
         }
     ]
 }

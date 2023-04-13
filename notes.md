@@ -6,15 +6,6 @@ where to get user name?
 
 save image meta-data in plist?
 
-### new design
-
-1 program does both - download images & lock screen
-
-DailyBing
-DailyBing --schedule --at 03:01
-DailyBing --lockscreen --pin 123456
-
-where --lockscreen is nonfunctional, use CatLock.py
 
 
 

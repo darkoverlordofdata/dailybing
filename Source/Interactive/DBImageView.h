@@ -6,7 +6,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "DBWindow.h"
-#import "NSImage+SaveAs.h"
+#import "../Extensions/NSImage+SaveAs.h"
 
 @class DBWindow;
 

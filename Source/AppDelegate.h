@@ -9,18 +9,18 @@
 #import "Interactive/DBWindow.h"
 #import "LockScreen/LockWindow.h"
 
-@interface AppDelegate : NSObject {
-    BOOL _help;
-    BOOL _version;
-    BOOL _schedule;
-    BOOL _lockscreen;
-    NSString *_pin;
-    NSString *_at;
 
-}
 
+@interface AppDelegate : NSObject 
+
+@property (assign, nonatomic) BOOL help;
+@property (assign, nonatomic) BOOL version;
+@property (assign, nonatomic) BOOL schedule;
+@property (assign, nonatomic) BOOL lockscreen;
+@property (strong, nonatomic) NSString *pin;
+@property (strong, nonatomic) NSString *at;
 @property (strong, nonatomic) NSWindow *window;
-// @property (strong, nonatomic) DBWindow *window;
+
 
 - (instancetype)initWithFlags:(BOOL)help version:(BOOL)version schedule:(BOOL)schedule lockscreen:(BOOL)lockscreen pin:(NSString*)pin at:(NSString*)at;
 

@@ -1,6 +1,6 @@
 #!/bin/sh
 gsettings set org.gnome.shell.keybindings toggle-overview "[]" &
 gsettings set org.gnome.shell.keybindings toggle-application-view "[]" &
-openapp DailyBing --screenlock --pin 420420
+openapp DailyBing --lockscreen --pin 420420
 gsettings set org.gnome.shell.keybindings toggle-overview "['<Super>s']" &
 gsettings set org.gnome.shell.keybindings toggle-application-view "['<Super>a']" &

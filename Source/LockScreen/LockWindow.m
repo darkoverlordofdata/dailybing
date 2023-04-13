@@ -1,5 +1,5 @@
 #import "LockWindow.h"
-#import <GNUstepGUI/GSDisplayServer.h>
+// #import <GNUstepGUI/GSDisplayServer.h>
 // #import <X11/Xlib.h>
 
 
@@ -8,7 +8,8 @@
 /**
  *  Type Constructor
  */
-- (instancetype)init {
+- (instancetype)init
+{
   counter = 0;
   input = [NSString new];
   NSSize resolution = [[NSScreen mainScreen] frame].size;
