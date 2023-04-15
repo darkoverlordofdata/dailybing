@@ -1,7 +1,4 @@
 #import "LockWindow.h"
-// #import <GNUstepGUI/GSDisplayServer.h>
-// #import <X11/Xlib.h>
-
 
 @implementation LockWindow
 
@@ -10,8 +7,8 @@
  */
 - (instancetype)init
 {
-  counter = 0;
-  input = [NSString new];
+  _counter = 0;
+  _input = [NSString new];
   NSSize resolution = [[NSScreen mainScreen] frame].size;
   [super
       initWithContentRect:NSMakeRect(0, 0, resolution.width, resolution.height)
@@ -23,54 +20,50 @@
   /**
    * Load the bundle data
    */
-  NSString *root =
-      @"/usr/GNUstep/Local/Applications/DailyBing.app/Resources/themes";
-  NSString *_locked =
-      [NSString stringWithFormat:@"%@/%@", root, @"wallpaper.locked.jpg"];
-  NSString *_authorize =
-      [[NSString stringWithFormat:@"%@/%@", root, @"wallpaper.authorize.jpg"] retain];
-  NSString *_textFile =
-      [NSString stringWithFormat:@"%@/%@", root, @"wallpaper.description"];
+  NSString *bundlePath = [[NSBundle mainBundle] bundlePath]; 
+
+  NSString *locked = 
+      [NSString stringWithFormat:@"%@/%@", bundlePath, @"Resources/themes/wallpaper.locked.jpg"];
+  NSString *authorize = 
+      [NSString stringWithFormat:@"%@/%@", bundlePath, @"Resources/themes/wallpaper.authorize.jpg"];
+  NSString *textFile = 
+      [NSString stringWithFormat:@"%@/%@", bundlePath, @"Resources/themes/wallpaper.description"];
+
 
   /**
    * Parse the bundle data
    */
-  NSString *content = [NSString stringWithContentsOfFile:_textFile
+  NSString *content = [NSString stringWithContentsOfFile:textFile
                                                 encoding:NSUTF8StringEncoding
                                                    error:NULL];
 
   NSArray *content0 = [content componentsSeparatedByString:@"\n"];
 
-  NSString *_titleString = content0[0];
+  NSString *titleString = content0[0];
   NSArray *content1 = [content0[1] componentsSeparatedByString:@"("];
-  NSString *_descriptionString = content1[0];
-  // NSString *_copyrightString = content1[1];
-  NSString *_copyrightString = [content1[1] substringToIndex:[content1[1] length]-1];
+  NSString *descriptionString = content1[0];
+  // NSString *copyrightString = content1[1];
+  NSString *copyrightString = [content1[1] substringToIndex:[content1[1] length]-1];
 
   /**
    *  Setup the wallpaper.locked.jpg image
    */
-  wallpaperLocked = [[[NSImageView alloc]
+  _wallpaperLocked = [[[NSImageView alloc]
       initWithFrame:NSMakeRect(0, 0, resolution.width, resolution.height)]
       autorelease];
-  [wallpaperLocked setImage:[[NSImage alloc] initWithContentsOfFile:_locked]];
+  [_wallpaperLocked setImage:[[NSImage alloc] initWithContentsOfFile:locked]];
 
   /**
    *  Setup the wallpaper.authorize.jpg image
    */
-  wallpaperAuthorize = [[[NSImageView alloc]
+  _wallpaperAuthorize = [[[NSImageView alloc]
       initWithFrame:NSMakeRect(0, 0, resolution.width, resolution.height)]
       autorelease];
-  [wallpaperAuthorize setImage:[[NSImage alloc] initWithContentsOfFile:_authorize]];
-  [wallpaperAuthorize setHidden:YES];
+  [_wallpaperAuthorize setImage:[[NSImage alloc] initWithContentsOfFile:authorize]];
+  [_wallpaperAuthorize setHidden:YES];
 
-  // [super
-  //     initWithContentRect:NSMakeRect(0, 0, resolution.width, resolution.height)
-  //               styleMask:NSBorderlessWindowMask
-  //                 backing:NSBackingStoreBuffered
-  //                   defer:NO];
-  [[self contentView] addSubview:wallpaperLocked];
-  [[self contentView] addSubview:wallpaperAuthorize];
+  [[self contentView] addSubview:_wallpaperLocked];
+  [[self contentView] addSubview:_wallpaperAuthorize];
 
   [self orderFrontRegardless];
   [self setLevel:NSScreenSaverWindowLevel - 1];
@@ -85,53 +78,53 @@
 
   NSString* fullName = @"bruce davidson";
 
-  userName = [[[NSTextField alloc]
+  _userName = [[[NSTextField alloc]
       initWithFrame:NSMakeRect(resolution.width / 2 - ([fullName length] / 2) - [fullName length] * 5,
                                resolution.height*.5 - 80, 400, 24)]
       autorelease];
-  [userName setFont:[NSFont fontWithName:@"SanFranciscoDisplay-Medium"
+  [_userName setFont:[NSFont fontWithName:@"SanFranciscoDisplay-Medium"
                                          size:24]];
-  [userName setStringValue:fullName];
-  [userName setBezeled:NO];
-  [userName setBezelStyle:NSTextFieldRoundedBezel];
-  [userName setDrawsBackground:NO];
-  [userName setEditable:NO];
-  [userName setSelectable:NO];
-  [userName setHidden:YES];
-  [userName setTextColor:[NSColor whiteColor]];
-  [[self contentView] addSubview:userName];
+  [_userName setStringValue:fullName];
+  [_userName setBezeled:NO];
+  [_userName setBezelStyle:NSTextFieldRoundedBezel];
+  [_userName setDrawsBackground:NO];
+  [_userName setEditable:NO];
+  [_userName setSelectable:NO];
+  [_userName setHidden:YES];
+  [_userName setTextColor:[NSColor whiteColor]];
+  [[self contentView] addSubview:_userName];
 
 
-  avatar = [[[NSImageView alloc]
+  _avatar = [[[NSImageView alloc]
       initWithFrame:NSMakeRect(resolution.width * .5 - 64, 
                                 resolution.height * .5, 128, 128)]
       autorelease];
-  [avatar setImage:[[NSImage imageNamed:@"avatar.png"]imageByScalingProportionallyToSize:NSMakeSize(256,256)]];
-  [avatar setHidden:YES];
-  [[self contentView] addSubview:avatar];
+  [_avatar setImage:[[NSImage imageNamed:@"avatar.png"]imageByScalingProportionallyToSize:NSMakeSize(256,256)]];
+  [_avatar setHidden:YES];
+  [[self contentView] addSubview:_avatar];
 
   /*
    * background for PIN input
    */
-  backView = [[BackView alloc]
+  _backView = [[BackView alloc]
       initWithFrame:NSMakeRect(resolution.width / 2 - 225,
                                resolution.height / 3, 450, 55)];
-  [backView setHidden:YES];
-  [[self contentView] addSubview:backView];
+  [_backView setHidden:YES];
+  [[self contentView] addSubview:_backView];
 
   /*
    * Enter PIN
    */
-  passcode = [[[NSSecureTextField alloc]
+  _passcode = [[[NSSecureTextField alloc]
       initWithFrame:NSMakeRect(resolution.width / 2 - 200,
                                resolution.height / 3 - 24, 400, 96)]
       autorelease];
 
 //  [[NSColor colorWithDeviceRed:rr green:gg blue:bb alpha:1.0f] set];
 
-  [passcode setFont:[NSFont fontWithName:@"SanFranciscoDisplay-Medium"
+  [_passcode setFont:[NSFont fontWithName:@"SanFranciscoDisplay-Medium"
                                     size:96]];
-  [passcode setStringValue:input];
+  [_passcode setStringValue:_input];
 
   //  https://www.colorhexa.com/36454f
   NSColor *charcoalColor = [NSColor colorWithDeviceRed:(float)0x36 / (float)255
@@ -139,15 +132,15 @@
                                      blue:(float)0x4f / (float)255 
                                      alpha:1.0f]; 
 
-  // [passcode setTextColor:[NSColor darkGrayColor]];
-  [passcode setTextColor:charcoalColor];
-  [passcode setBezeled:NO];
-  [passcode setBezelStyle:NSTextFieldRoundedBezel];
-  [passcode setDrawsBackground:NO];
-  [passcode setEditable:NO];
-  [passcode setSelectable:NO];
-  [passcode setHidden:YES];
-  [[self contentView] addSubview:passcode];
+  // [_passcode setTextColor:[NSColor darkGrayColor]];
+  [_passcode setTextColor:charcoalColor];
+  [_passcode setBezeled:NO];
+  [_passcode setBezelStyle:NSTextFieldRoundedBezel];
+  [_passcode setDrawsBackground:NO];
+  [_passcode setEditable:NO];
+  [_passcode setSelectable:NO];
+  [_passcode setHidden:YES];
+  [[self contentView] addSubview:_passcode];
 
   /*
    * Display instructions:
@@ -155,118 +148,118 @@
    */
   NSFont *inFont = [NSFont fontWithName:@"SanFranciscoDisplay-Medium" size:24];
   CGFloat inSize = [inFont widthOfString:@"Enter PIN"];
-  instructions = [[[NSTextField alloc]
+  _instructions = [[[NSTextField alloc]
       initWithFrame:NSMakeRect(resolution.width / 2 - (inSize / 2),
                                resolution.height / 3 - 80, 400, 24)]
       autorelease];
 
-  [instructions setFont:[NSFont fontWithName:@"SanFranciscoDisplay-Medium"
+  [_instructions setFont:[NSFont fontWithName:@"SanFranciscoDisplay-Medium"
                                          size:24]];
-  [instructions setStringValue:@"Enter PIN"];
-  [instructions setBezeled:NO];
-  [instructions setBezelStyle:NSTextFieldRoundedBezel];
-  [instructions setDrawsBackground:NO];
-  [instructions setEditable:NO];
-  [instructions setSelectable:NO];
-  [instructions setHidden:YES];
-  [instructions setTextColor:[NSColor whiteColor]];
-  [[self contentView] addSubview:instructions];
+  [_instructions setStringValue:@"Enter PIN"];
+  [_instructions setBezeled:NO];
+  [_instructions setBezelStyle:NSTextFieldRoundedBezel];
+  [_instructions setDrawsBackground:NO];
+  [_instructions setEditable:NO];
+  [_instructions setSelectable:NO];
+  [_instructions setHidden:YES];
+  [_instructions setTextColor:[NSColor whiteColor]];
+  [[self contentView] addSubview:_instructions];
 
   /*
    * Display date:
    *  Monday, January 31
    */
-  currentDate = [[[NSTextField alloc]
+  _currentDate = [[[NSTextField alloc]
       initWithFrame:NSMakeRect(60, 80, 800, 64)] autorelease];
 
-  [currentDate setFont:[NSFont fontWithName:@"SanFranciscoDisplay-Medium"
+  [_currentDate setFont:[NSFont fontWithName:@"SanFranciscoDisplay-Medium"
                                         size:64]];
-  [currentDate setBezeled:NO];
-  [currentDate setBezelStyle:NSTextFieldRoundedBezel];
-  [currentDate setDrawsBackground:NO];
-  [currentDate setEditable:NO];
-  [currentDate setSelectable:NO];
-  [currentDate setHidden:NO];
-  [currentDate setTextColor:[NSColor whiteColor]];
-  [[self contentView] addSubview:currentDate];
+  [_currentDate setBezeled:NO];
+  [_currentDate setBezelStyle:NSTextFieldRoundedBezel];
+  [_currentDate setDrawsBackground:NO];
+  [_currentDate setEditable:NO];
+  [_currentDate setSelectable:NO];
+  [_currentDate setHidden:NO];
+  [_currentDate setTextColor:[NSColor whiteColor]];
+  [[self contentView] addSubview:_currentDate];
   [self updateTime];
 
   /*
    * Display time:
    *  1:01 am
    */
-  currentTime = [[[NSTextField alloc]
+  _currentTime = [[[NSTextField alloc]
       initWithFrame:NSMakeRect(60, 200, 800, 128)] autorelease];
 
-  [currentTime setFont:[NSFont fontWithName:@"SanFranciscoDisplay-Medium"
+  [_currentTime setFont:[NSFont fontWithName:@"SanFranciscoDisplay-Medium"
                                         size:128]];
-  [currentTime setBezeled:NO];
-  [currentTime setBezelStyle:NSTextFieldRoundedBezel];
-  [currentTime setDrawsBackground:NO];
-  [currentTime setEditable:NO];
-  [currentTime setSelectable:NO];
-  [currentTime setHidden:NO];
-  [currentTime setTextColor:[NSColor whiteColor]];
-  [[self contentView] addSubview:currentTime];
+  [_currentTime setBezeled:NO];
+  [_currentTime setBezelStyle:NSTextFieldRoundedBezel];
+  [_currentTime setDrawsBackground:NO];
+  [_currentTime setEditable:NO];
+  [_currentTime setSelectable:NO];
+  [_currentTime setHidden:NO];
+  [_currentTime setTextColor:[NSColor whiteColor]];
+  [[self contentView] addSubview:_currentTime];
   [self updateTime];
 
   /*
    * Display title:
    */
-  title = [[[NSTextField alloc]
+  _title = [[[NSTextField alloc]
       initWithFrame:NSMakeRect(60, resolution.height - 80, 800, 32)]
       autorelease];
 
-  [title setFont:[NSFont fontWithName:@"SanFranciscoDisplay-Medium" size:32]];
-  [title setBezeled:NO];
-  [title setBezelStyle:NSTextFieldRoundedBezel];
-  [title setDrawsBackground:NO];
-  [title setEditable:NO];
-  [title setSelectable:NO];
-  [title setHidden:NO];
-  [title setTextColor:[NSColor whiteColor]];
-  [[self contentView] addSubview:title];
-  [title setStringValue:_titleString];
+  [_title setFont:[NSFont fontWithName:@"SanFranciscoDisplay-Medium" size:32]];
+  [_title setBezeled:NO];
+  [_title setBezelStyle:NSTextFieldRoundedBezel];
+  [_title setDrawsBackground:NO];
+  [_title setEditable:NO];
+  [_title setSelectable:NO];
+  [_title setHidden:NO];
+  [_title setTextColor:[NSColor whiteColor]];
+  [[self contentView] addSubview:_title];
+  [_title setStringValue:titleString];
 
   /*
    * Display description:
    */
-  description = [[[NSTextField alloc]
+  _description = [[[NSTextField alloc]
       initWithFrame:NSMakeRect(60, resolution.height - 110, 800, 24)]
       autorelease];
 
-  [description setFont:[NSFont fontWithName:@"SanFranciscoDisplay-Medium"
+  [_description setFont:[NSFont fontWithName:@"SanFranciscoDisplay-Medium"
                                         size:24]];
-  [description setBezeled:NO];
-  [description setBezelStyle:NSTextFieldRoundedBezel];
-  [description setDrawsBackground:NO];
-  [description setEditable:NO];
-  [description setSelectable:NO];
-  [description setHidden:NO];
-  [description setTextColor:[NSColor whiteColor]];
-  [[self contentView] addSubview:description];
-  [description setStringValue:_descriptionString];
+  [_description setBezeled:NO];
+  [_description setBezelStyle:NSTextFieldRoundedBezel];
+  [_description setDrawsBackground:NO];
+  [_description setEditable:NO];
+  [_description setSelectable:NO];
+  [_description setHidden:NO];
+  [_description setTextColor:[NSColor whiteColor]];
+  [[self contentView] addSubview:_description];
+  [_description setStringValue:descriptionString];
 
   /*
    * Display copyright:
    */
-  copyright = [[[NSTextField alloc]
+  _copyright = [[[NSTextField alloc]
       initWithFrame:NSMakeRect(60, resolution.height - 140, 800, 18)]
       autorelease];
 
-  [copyright setFont:[NSFont fontWithName:@"SanFranciscoDisplay-Medium"
+  [_copyright setFont:[NSFont fontWithName:@"SanFranciscoDisplay-Medium"
                                       size:18]];
-  [copyright setBezeled:NO];
-  [copyright setBezelStyle:NSTextFieldRoundedBezel];
-  [copyright setDrawsBackground:NO];
-  [copyright setEditable:NO];
-  [copyright setSelectable:NO];
-  [copyright setHidden:NO];
-  [copyright setTextColor:[NSColor whiteColor]];
-  [[self contentView] addSubview:copyright];
-  [copyright setStringValue:_copyrightString];
+  [_copyright setBezeled:NO];
+  [_copyright setBezelStyle:NSTextFieldRoundedBezel];
+  [_copyright setDrawsBackground:NO];
+  [_copyright setEditable:NO];
+  [_copyright setSelectable:NO];
+  [_copyright setHidden:NO];
+  [_copyright setTextColor:[NSColor whiteColor]];
+  [[self contentView] addSubview:_copyright];
+  [_copyright setStringValue:copyrightString];
 
-  timer = [NSTimer scheduledTimerWithTimeInterval:1.0f
+  _timer = [NSTimer scheduledTimerWithTimeInterval:1.0f
                                            target:self
                                          selector:@selector(onTimerTick:)
                                          userInfo:nil
@@ -280,32 +273,32 @@
 - (void)setAppearance:(BOOL) locked
 {
     if (locked) {
-        [wallpaperLocked setHidden:NO];
-        [wallpaperAuthorize setHidden:YES];
-        [avatar setHidden:YES];
-        [userName setHidden:YES];
-        [backView setHidden:YES];
-        [passcode setHidden:YES];
-        [instructions setHidden:YES];
-        [title setHidden:NO];
-        [description setHidden:NO];
-        [copyright setHidden:NO];
-        [currentTime setHidden:NO];
-        [currentDate setHidden:NO];
+        [_wallpaperLocked setHidden:NO];
+        [_wallpaperAuthorize setHidden:YES];
+        [_avatar setHidden:YES];
+        [_userName setHidden:YES];
+        [_backView setHidden:YES];
+        [_passcode setHidden:YES];
+        [_instructions setHidden:YES];
+        [_title setHidden:NO];
+        [_description setHidden:NO];
+        [_copyright setHidden:NO];
+        [_currentTime setHidden:NO];
+        [_currentDate setHidden:NO];
 
     } else {
-        [wallpaperLocked setHidden:YES];
-        [wallpaperAuthorize setHidden:NO];
-        [avatar setHidden:NO];
-        [userName setHidden:NO];
-        [backView setHidden:NO];
-        [passcode setHidden:NO];
-        [instructions setHidden:NO];
-        [title setHidden:YES];
-        [description setHidden:YES];
-        [copyright setHidden:YES];
-        [currentTime setHidden:YES];
-        [currentDate setHidden:YES];
+        [_wallpaperLocked setHidden:YES];
+        [_wallpaperAuthorize setHidden:NO];
+        [_avatar setHidden:NO];
+        [_userName setHidden:NO];
+        [_backView setHidden:NO];
+        [_passcode setHidden:NO];
+        [_instructions setHidden:NO];
+        [_title setHidden:YES];
+        [_description setHidden:YES];
+        [_copyright setHidden:YES];
+        [_currentTime setHidden:YES];
+        [_currentDate setHidden:YES];
 
     }
 }
@@ -325,8 +318,8 @@
   NSDate *theDate = [NSDate date];
   NSString *dateString = [dateFormat stringFromDate:theDate];
   NSString *timeString = [timeFormat stringFromDate:theDate];
-  [currentDate setStringValue:dateString];
-  [currentTime setStringValue:timeString];
+  [_currentDate setStringValue:dateString];
+  [_currentTime setStringValue:timeString];
 }
 
 /**
@@ -345,12 +338,12 @@
 {
   [self updateTime];
 
-  counter++;
-  if (counter > 15) {
-      input = [NSString new];
-      [passcode setStringValue:input];
+  _counter++;
+  if (_counter > 15) {
+      _input = [NSString new];
+      [_passcode setStringValue:_input];
       [self setAppearance:YES];
-      counter = 0;
+      _counter = 0;
       // [NSApp terminate:nil];
       return;
 
@@ -375,7 +368,7 @@
   if ([self level] != NSDesktopWindowLevel) {
     [self setAppearance:NO];
 
-    counter = 0;
+    _counter = 0;
 
     int keyCode = [theEvent keyCode];
     NSString *str = [theEvent characters];
@@ -383,8 +376,8 @@
 
     if (ch == 27) {
       NSLog(@"<esc> %i", ch);
-      input = [NSString new];
-      [passcode setStringValue:input];
+      _input = [NSString new];
+      [_passcode setStringValue:_input];
       [self setAppearance:YES];
       return;
     }
@@ -392,26 +385,26 @@
     switch (keyCode) {
     case 22: //  backspace
       NSLog(@"<backspace> %i", ch);
-      if ([input length] <= 0)
+      if ([_input length] <= 0)
         break;
-      input = [input substringToIndex:[input length] - 1];
-      [passcode setStringValue:input];
+      _input = [_input substringToIndex:[_input length] - 1];
+      [_passcode setStringValue:_input];
       break;
 
     case 36: //  return
       NSLog(@"<return> %i", ch);
-      input = [NSString new];
-      [passcode setStringValue:input];
+      _input = [NSString new];
+      [_passcode setStringValue:_input];
       break;
 
     default:
       NSLog(@"key code %@ | %i", str, ch);
       if (ch > 255) break;
 
-      input = [input stringByAppendingString:str];
-      [passcode setStringValue:input];
-      if ([input isEqualToString:@"420420"]) {
-        timer = [NSTimer scheduledTimerWithTimeInterval:0.25f
+      _input = [_input stringByAppendingString:str];
+      [_passcode setStringValue:_input];
+      if ([_input isEqualToString:@"420420"]) {
+        _timer = [NSTimer scheduledTimerWithTimeInterval:0.25f
                                                  target:self
                                                selector:@selector(onTimerQuit:)
                                                userInfo:nil

@@ -19,3 +19,6 @@ defaults write NSGlobalDomain NSMenuInterfaceStyle NSWindows95InterfaceStyle
 
 
 /usr/GNUstep/Local/Applications/DailyBing.app/Resources/catlock.py "-p" "420420"
+
+root =              /usr/GNUstep/Local/Applications/DailyBing.app/Resources/themes
+resourcePath =      /home/darko/Documents/GitHub/dailybing/DailyBing.app

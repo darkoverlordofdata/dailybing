@@ -12,15 +12,13 @@
 
 
 @interface DBImageView : NSImageView <NSURLConnectionDelegate> {
-    NSMutableData *responseData;
-
+    NSString *_url;
+    NSString *_desc;
+    NSString *_title;
+    NSString *_urlBase;
+    NSMutableData *_responseData;
 }
 
-@property (strong, nonatomic) NSString *url;
-@property (strong, nonatomic) NSString *desc; //copyright
-@property (strong, nonatomic) NSString *title;
-@property (strong, nonatomic) NSString *urlBase;
-@property (strong, nonatomic) NSString *resourcePath;
 
 - (instancetype)initWithIndex:(int)index data:(NSDictionary *) data;
 - (void)onSelectImage;

@@ -6,3 +6,6 @@
 
 ## 04/09/23 - add LockScreen
 * first pass
+
+## 04/13/23 - refactor #1: file structure
+* folders Extensions, Interactive, and LockScreen

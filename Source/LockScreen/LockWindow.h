@@ -7,24 +7,22 @@
 
 @interface LockWindow : NSWindow 
 {
-  id  target;
-  SEL action;
-  NSImageView* avatar;
-  NSImageView* wallpaperLocked;
-  NSImageView* wallpaperAuthorize;
-  NSTimer* timer;
-  int counter;
-  NSString* input;
-  NSSecureTextField* passcode;
-  BackView* backView;
-  NSTextField* userName;
+  NSImageView* _avatar;
+  NSImageView* _wallpaperLocked;
+  NSImageView* _wallpaperAuthorize;
+  NSTimer* _timer;
+  int _counter;
+  NSString* _input;
+  NSSecureTextField* _passcode;
+  BackView* _backView;
+  NSTextField* _userName;
 
-  NSTextField* title;
-  NSTextField* description;
-  NSTextField* copyright;
-  NSTextField* currentDate;
-  NSTextField* currentTime;
-  NSTextField* instructions;
+  NSTextField* _title;
+  NSTextField* _description;
+  NSTextField* _copyright;
+  NSTextField* _currentDate;
+  NSTextField* _currentTime;
+  NSTextField* _instructions;
 }
 
 

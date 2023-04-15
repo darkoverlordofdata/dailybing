@@ -4,7 +4,7 @@
 
 @interface Controller : NSObject
 {
-    LockWindow *window;
+    LockWindow *_window;
 
 }
 

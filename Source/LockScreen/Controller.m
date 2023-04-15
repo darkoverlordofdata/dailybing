@@ -9,10 +9,8 @@
 
 - (void) applicationDidFinishLaunching: (NSNotification *) not
 {
-    window = [LockWindow new];
-    [window setDelegate:self];
-    // [window setLevel:kCGMainMenuWindowLevel-1];
-    // [window setCollectionBehavior:NSWindowCollectionBehaviorStationary|NSWindowCollectionBehaviorCanJoinAllSpaces|NSWindowCollectionBehaviorFullScreenAuxiliary];
+    _window = [LockWindow new];
+    [_window setDelegate:self];
 
 }
 
