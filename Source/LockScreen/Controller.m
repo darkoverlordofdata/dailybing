@@ -1,6 +1,9 @@
 #import "Controller.h"
 
-@implementation Controller
+@implementation Controller {
+    LockWindow *_window;
+}
+
 
 - (void) applicationWillFinishLaunching: (NSNotification *)aNotification;
 {

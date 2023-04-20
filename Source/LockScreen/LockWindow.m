@@ -1,12 +1,33 @@
+#import <pwd.h>
 #import "LockWindow.h"
 
-@implementation LockWindow
+
+@implementation LockWindow {
+  NSImageView* _avatar;
+  NSImageView* _wallpaperLocked;
+  NSImageView* _wallpaperAuthorize;
+  NSTimer* _timer;
+  int _counter;
+  NSString* _input;
+  NSSecureTextField* _passcode;
+  BackView* _backView;
+  NSTextField* _userName;
+
+  NSTextField* _title;
+  NSTextField* _description;
+  NSTextField* _copyright;
+  NSTextField* _currentDate;
+  NSTextField* _currentTime;
+  NSTextField* _instructions;
+}
+
 
 /**
  *  Type Constructor
  */
 - (instancetype)init
 {
+
   _counter = 0;
   _input = [NSString new];
   NSSize resolution = [[NSScreen mainScreen] frame].size;
@@ -37,12 +58,11 @@
                                                 encoding:NSUTF8StringEncoding
                                                    error:NULL];
 
-  NSArray *content0 = [content componentsSeparatedByString:@"\n"];
+  NSArray<NSString *> *content0 = [content componentsSeparatedByString:@"\n"];
 
   NSString *titleString = content0[0];
-  NSArray *content1 = [content0[1] componentsSeparatedByString:@"("];
+  NSArray<NSString *> *content1 = [content0[1] componentsSeparatedByString:@"("];
   NSString *descriptionString = content1[0];
-  // NSString *copyrightString = content1[1];
   NSString *copyrightString = [content1[1] substringToIndex:[content1[1] length]-1];
 
   /**
@@ -76,7 +96,8 @@
 
 
 
-  NSString* fullName = @"bruce davidson";
+  struct passwd *pw = getpwuid(getuid());
+  NSString *fullName = [NSString stringWithCString:strdup(pw->pw_gecos)];
 
   _userName = [[[NSTextField alloc]
       initWithFrame:NSMakeRect(resolution.width / 2 - ([fullName length] / 2) - [fullName length] * 5,
@@ -120,20 +141,16 @@
                                resolution.height / 3 - 24, 400, 96)]
       autorelease];
 
-//  [[NSColor colorWithDeviceRed:rr green:gg blue:bb alpha:1.0f] set];
+  [_passcode setFont:[NSFont fontWithName:@"SanFranciscoDisplay-Medium" size:96]];
 
-  [_passcode setFont:[NSFont fontWithName:@"SanFranciscoDisplay-Medium"
-                                    size:96]];
-  [_passcode setStringValue:_input];
-
-  //  https://www.colorhexa.com/36454f
+  //  Charcoal #36454f
   NSColor *charcoalColor = [NSColor colorWithDeviceRed:(float)0x36 / (float)255
                                      green:(float)0x45 / (float)255 
                                      blue:(float)0x4f / (float)255 
                                      alpha:1.0f]; 
 
-  // [_passcode setTextColor:[NSColor darkGrayColor]];
   [_passcode setTextColor:charcoalColor];
+  [_passcode setStringValue:_input];
   [_passcode setBezeled:NO];
   [_passcode setBezelStyle:NSTextFieldRoundedBezel];
   [_passcode setDrawsBackground:NO];

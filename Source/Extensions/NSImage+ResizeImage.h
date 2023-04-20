@@ -7,14 +7,6 @@
 #import <Cocoa/Cocoa.h>
 
 
-// @interface NSImage(saveAsJpegWithName)
-// - (void) saveAsJpegWithName:(NSString*) fileName;
-// @end
-
-// @interface NSImage(saveAsPngWithName)
-// - (void) saveAsPngWithName:(NSString*) fileName;
-// @end
-
 @interface NSImage(resizeImage)
 - (NSImage*)resizeImage:(NSImage*)input by:(CGFloat)factor;
 @end

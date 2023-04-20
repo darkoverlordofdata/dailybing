@@ -6,32 +6,6 @@
 
 #import "NSImage+ResizeImage.h"
 
-// @implementation NSImage(saveAsJpegWithName)
-
-// - (void) saveAsJpegWithName:(NSString*) fileName
-// {
-//     // Cache the reduced image
-//     NSData *imageData = [self TIFFRepresentation];
-//     NSBitmapImageRep *imageRep = [NSBitmapImageRep imageRepWithData:imageData];
-//     NSDictionary *imageProps = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:1.0] forKey:NSImageCompressionFactor];
-//     imageData = [imageRep representationUsingType:NSJPEGFileType properties:imageProps];
-//     [imageData writeToFile:fileName atomically:NO];        
-// }
-// @end
-
-
-// @implementation NSImage(saveAsPngWithName)
-// - (void) saveAsPngWithName:(NSString*) fileName
-// {
-//     // Cache the reduced image
-//     NSData *imageData = [self TIFFRepresentation];
-//     NSBitmapImageRep *imageRep = [NSBitmapImageRep imageRepWithData:imageData];
-//     NSDictionary *imageProps = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:1.0] forKey:NSImageCompressionFactor];
-//     imageData = [imageRep representationUsingType:NSPNGFileType properties:imageProps];
-//     [imageData writeToFile:fileName atomically:NO];        
-// }
-
-// @end
 
 @implementation NSImage(resizeImage)
 -(NSImage*)resizeImage:(NSImage*)input by:(CGFloat)factor

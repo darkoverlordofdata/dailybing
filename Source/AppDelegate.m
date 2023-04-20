@@ -72,7 +72,7 @@
      */
     } else {
 
-        _window = [[DBWindow alloc] init];
+        _window = [[ImageWindow alloc] init];
         [_window setDelegate:self];
     }
     

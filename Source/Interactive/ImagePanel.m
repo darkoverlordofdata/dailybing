@@ -5,9 +5,15 @@
  */
 
 #import <Cocoa/Cocoa.h>
-#import "DBImageView.h"
+#import "ImagePanel.h"
 
-@implementation DBImageView;
+@implementation ImagePanel {
+    NSString *_url;
+    NSString *_desc;
+    NSString *_title;
+    NSString *_urlBase;
+    NSMutableData *_responseData;
+}
 
 
 - (instancetype)initWithIndex:(int)index data:(NSDictionary *) data
@@ -45,7 +51,8 @@
 }
 
 
-- (void)onSelectImage {
+- (void)onSelectImage 
+{
     NSData *url = [_url dataUsingEncoding:NSUTF8StringEncoding];
     NSData *desc = [_desc dataUsingEncoding:NSUTF8StringEncoding];
     NSData *title = [_title dataUsingEncoding:NSUTF8StringEncoding];
@@ -130,7 +137,8 @@
 
 }
 
-//NSURLConnectionDelegate protocol
+
+#pragma mark - NSURLConnectionDelegate
 //============================================================================
 
 - (void)connection:(NSURLConnection*)connection didReceiveResponse:(NSURLResponse *)response
@@ -143,6 +151,7 @@
 }
 - (void)connection:(NSURLConnection*)connection didFailWithError:(NSError*)error
 {
+    NSLog(@"%@", error);
 }
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {

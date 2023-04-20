@@ -15,7 +15,3 @@
 - (void) saveAsPngWithName:(NSString*) fileName;
 @end
 
-// @interface NSImage(resizeImage)
-// - (NSImage*)resizeImage:(NSImage*)input by:(CGFloat)factor;
-// @end
-

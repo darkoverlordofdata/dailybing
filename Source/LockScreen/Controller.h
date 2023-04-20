@@ -3,10 +3,6 @@
 #import "LockWindow.h"
 
 @interface Controller : NSObject
-{
-    LockWindow *_window;
-
-}
 
 - (void)applicationWillFinishLaunching:(NSNotification *) not;
 - (void)applicationDidFinishLaunching:(NSNotification *) not;

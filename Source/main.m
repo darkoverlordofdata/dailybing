@@ -6,7 +6,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "AppDelegate.h"
-#import "Interactive/DBWindow.h"
+// #import "Interactive/ImageWindow.h"
 
 #include <getopt.h>
 

@@ -6,7 +6,7 @@
 
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
-#import "Interactive/DBWindow.h"
+#import "Interactive/ImageWindow.h"
 #import "LockScreen/LockWindow.h"
 
 

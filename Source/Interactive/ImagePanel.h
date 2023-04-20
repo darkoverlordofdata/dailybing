@@ -5,28 +5,47 @@
  */
 
 #import <Cocoa/Cocoa.h>
-#import "DBWindow.h"
+#import "ImageWindow.h"
 #import "../Extensions/NSImage+SaveAs.h"
 
-@class DBWindow;
+@class ImageWindow;
+
+/**
+ * Class ImagePanel
+ * Displays images downloaded from https://bing.wallpaper.pics
+ *
+ */
+@interface ImagePanel : NSImageView <NSURLConnectionDelegate> 
 
 
-@interface DBImageView : NSImageView <NSURLConnectionDelegate> {
-    NSString *_url;
-    NSString *_desc;
-    NSString *_title;
-    NSString *_urlBase;
-    NSMutableData *_responseData;
-}
-
-
+/**
+ * Initialze and return a ImagePanel object
+ */
 - (instancetype)initWithIndex:(int)index data:(NSDictionary *) data;
+/**
+ * Respond to image selected
+ */
 - (void)onSelectImage;
 
-//  NSURLConnectionDelegate
+#pragma mark - NSURLConnectionDelegate
+/**
+ * connection:didReceiveResponse
+ */
 - (void)connection:(NSURLConnection*)connection didReceiveResponse:(NSURLResponse *)response;
+
+/**
+ * connection:didReceiveData
+ */
 - (void)connection:(NSURLConnection*)connection didReceiveData:(NSData*)data;
+
+/**
+ * connection:didFailWithError
+ */
 - (void)connection:(NSURLConnection*)connection didFailWithError:(NSError*)error;
+
+/**
+ * connectionDidFinishLoading
+ */
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection;
 
 @end
