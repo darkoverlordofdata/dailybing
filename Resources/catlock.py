@@ -116,7 +116,13 @@ class CatLock(QWidget):
         else:
             self.avatar = QPixmap(LOCAL + '/avatar.png')
     
-        fnt_60 = QFont(self.fontFamily, 60, QFont.Normal)
+        # fnt_60 = QFont(self.fontFamily, 60, QFont.Normal)
+        fnt_120 = QFont(self.fontFamily, 120, QFont.Normal)
+        fnt_64 = QFont(self.fontFamily, 64, QFont.Normal)
+        fnt_32 = QFont(self.fontFamily, 32, QFont.Normal)
+        fnt_24 = QFont(self.fontFamily, 24, QFont.Normal)
+        fnt_18 = QFont(self.fontFamily, 18, QFont.Normal)
+
         fnt_30 = QFont(self.fontFamily, 30, QFont.Normal)
         fnt_20 = QFont(self.fontFamily, 20, QFont.Normal)
         fnt_12 = QFont(self.fontFamily, 12, QFont.Normal)
@@ -156,31 +162,32 @@ class CatLock(QWidget):
         self.instructions.setStyleSheet("color: white")
 
         self.titlebox = QLabel(self)
-        self.titlebox.setFont(fnt_20)
+        self.titlebox.setFont(fnt_32)
         self.titlebox.setText(self.title)
         self.titlebox.move(60, 40)
         self.titlebox.setStyleSheet("color: white")
         self.titlebox.setFocusPolicy(Qt.ClickFocus | Qt.TabFocus | Qt.NoFocus)
 
         self.infobox = QLabel(self)
-        self.infobox.setFont(fnt_12)
+        self.infobox.setFont(fnt_24)
         self.infobox.setText(self.info)
-        self.infobox.move(60, 80)
+        self.infobox.move(60, 95)
         self.infobox.setStyleSheet("color: white")
 
         self.copybox = QLabel(self)
-        self.copybox.setFont(fnt_10)
+        self.copybox.setFont(fnt_18)
         self.copybox.setText(self.copyright[:-1])
-        self.copybox.move(60, 110)
+        self.copybox.move(60, 140)
         self.copybox.setStyleSheet("color: white")
 
         self.clock = QLabel(self)
-        self.clock.setFont(fnt_60)
-        self.clock.move(60, int(self.height * 0.70))
+        self.clock.setFont(fnt_120)
+        # self.clock.move(60, int(self.height * 0.70))
+        self.clock.move(60, int(self.height * 0.65))
         self.clock.setStyleSheet("color: white")
 
         self.calendar = QLabel(self)        
-        self.calendar.setFont(fnt_30)
+        self.calendar.setFont(fnt_64)
         self.calendar.move(60, int(self.height * 0.85))
         self.calendar.setStyleSheet("color: white")
 

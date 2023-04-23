@@ -30,16 +30,15 @@ int main(int argc, char *argv[])
 
   @autoreleasepool {
     [NSApplication sharedApplication];
-    NSLog(@"%s", argv[0]);
 
     int longindex = -1, opt;
     BOOL help = NO;
     BOOL version = NO;
     BOOL schedule = NO;
     BOOL lockscreen = NO;
-    NSString *pin;
-    NSString *at;
-    NSString *font;
+    NSString *pin = @"";
+    NSString *at = @"";
+    NSString *font = @"";
 
     while ((opt = getopt_long(argc, argv, "hlsva:p:f:", longopts, &longindex))
           != -1) {

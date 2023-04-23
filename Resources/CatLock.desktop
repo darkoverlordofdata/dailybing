@@ -2,8 +2,8 @@
 Name=CatLock
 Comment=Keep Your Cat Off Your Computer!
 GenericName=Development Environment
-Exec=/usr/bin/python3 /home/darko/Documents/GitHub/dailybing/Resources/catlock.py --pin 420420
-Icon=/home/darko//Documents/GitHub/dailybing/Resources/catlock.png
+Exec=/usr/local/bin/python3 /home/darko/GitHub/dailybing/Resources/catlock.py --pin 420420
+Icon=/home/darko/GitHub/dailybing/Resources/catlock.png
 Type=Application
 StartupNotify=true
 Categories=GNOME;GTK;Development;Documentation;
