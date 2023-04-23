@@ -20,7 +20,8 @@ static const struct option longopts[] = {
     {"schedule", no_argument, NULL, 's'},
     {"version", no_argument, NULL, 'v'},
     {"at", required_argument, NULL, 'a'},
-    {"pin", required_argument, NULL, 'p'}
+    {"pin", required_argument, NULL, 'p'},
+    {"font", required_argument, NULL, 'f'}
 };
 
 
@@ -38,8 +39,9 @@ int main(int argc, char *argv[])
     BOOL lockscreen = NO;
     NSString *pin;
     NSString *at;
+    NSString *font;
 
-    while ((opt = getopt_long(argc, argv, "hlsva:p:", longopts, &longindex))
+    while ((opt = getopt_long(argc, argv, "hlsva:p:f:", longopts, &longindex))
           != -1) {
         switch (opt) {
         case 'h':
@@ -62,12 +64,15 @@ int main(int argc, char *argv[])
         case 'p':
             pin = [NSString stringWithCString:optarg];
             break;
+        case 'f':
+            font = [NSString stringWithCString:optarg];
+            break;
 
         }
    }
 
 
-    AppDelegate *controller = [[AppDelegate alloc]initWithFlags:help version:version schedule:schedule lockscreen:lockscreen pin:pin at:at];
+    AppDelegate *controller = [[AppDelegate alloc]initWithFlags:help version:version schedule:schedule lockscreen:lockscreen pin:pin at:at font:font];
     [[NSApplication sharedApplication] setDelegate: controller];
 
     NSApplicationMain(argc, (const char **)argv);

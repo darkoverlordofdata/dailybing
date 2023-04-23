@@ -6,9 +6,14 @@
 #import "ImageWindow.h"
 #import "ImageContainer.h"
 
-@implementation ImageWindow
-- (instancetype)init {
-        
+@implementation ImageWindow {
+  AppDelegate* _app;
+
+}
+- (instancetype)initWithParent: (AppDelegate*) app
+{
+    
+	_app = app;
 	[[ImageContainer alloc] initWithParent:self];
 
 	[super initWithContentRect:NSMakeRect(0, 0, 1920, 140) styleMask:NSWindowStyleMaskTitled | NSWindowStyleMaskClosable | NSWindowStyleMaskMiniaturizable | NSWindowStyleMaskResizable backing:NSBackingStoreBuffered defer:NO];

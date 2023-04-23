@@ -7,21 +7,25 @@
 #import <Cocoa/Cocoa.h>
 #import "ImagePanel.h"
 #import "ImageContainer.h"
+#import "../AppDelegate.h"
 
 @class ImagePanel;
 @class ImageContainer;
+@class AppDelegate;
 
 /**
  * Class ImageWindow
  * Main window for Interactive/DownloadBing
  *
  */
-@interface ImageWindow : NSWindow;
+@interface ImageWindow : NSWindow ;
 
 /**
  * Initialze and return a DBWindow object
  */
-- (instancetype) init;
+// - (instancetype) init;
+- (instancetype)initWithParent: (AppDelegate*) parent;
+
 /**
  * Terminate application and return YES
  */

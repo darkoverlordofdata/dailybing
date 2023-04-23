@@ -19,12 +19,15 @@
 @property (assign, nonatomic) BOOL lockscreen;
 @property (strong, nonatomic) NSString *pin;
 @property (strong, nonatomic) NSString *at;
+@property (strong, nonatomic) NSString *font;
+@property (strong, nonatomic) NSString *defaultPin;
+@property (strong, nonatomic) NSString *defaultAt;
+@property (strong, nonatomic) NSString *defaultFont;
 @property (strong, nonatomic) NSWindow *window;
 
+// - (instancetype)initWithPin:(NSString*)pin at:(NSString*)at font:(NSString*)font;
+- (instancetype)initWithFlags:(BOOL)help version:(BOOL)version schedule:(BOOL)schedule lockscreen:(BOOL)lockscreen pin:(NSString*)pin at:(NSString*)at font:(NSString*)font ;
 
-- (instancetype)initWithFlags:(BOOL)help version:(BOOL)version schedule:(BOOL)schedule lockscreen:(BOOL)lockscreen pin:(NSString*)pin at:(NSString*)at;
-
-// - (void)applicationWillFinishLaunching:(NSNotification *) not;
 - (void)applicationDidFinishLaunching:(NSNotification *) not;
 
 

@@ -15,16 +15,33 @@
 @synthesize lockscreen = _lockscreen;
 @synthesize pin = _pin;
 @synthesize at = _at;
+@synthesize font = _font;
+@synthesize defaultPin = _defaultPin;
+@synthesize defaultAt = _defaultAt;
+@synthesize defaultFont = _defaultFont;
 
 
-- (instancetype)initWithFlags:(BOOL)help version:(BOOL)version schedule:(BOOL)schedule lockscreen:(BOOL)lockscreen pin:(NSString*)pin at:(NSString*)at
+- (instancetype) init
 {
+    _defaultPin = @"420420";
+    _defaultAt = @"01:01";
+    _defaultFont = @"SanFranciscoDisplay-Medium";
+    return self;
+
+}
+
+
+- (instancetype)initWithFlags:(BOOL)help version:(BOOL)version schedule:(BOOL)schedule lockscreen:(BOOL)lockscreen pin:(NSString*)pin at:(NSString*)at font:(NSString*)font
+{
+    self = [self init];
+    
     _help = help;
     _version = version;
     _schedule = schedule;
     _lockscreen = lockscreen;
-    _pin = [[NSString alloc]initWithString:pin? pin:@""];
-    _at = [[NSString alloc]initWithString:at? at:@""];
+    _pin = [[NSString alloc]initWithString:pin? pin:_defaultPin];
+    _at = [[NSString alloc]initWithString:at? at:_defaultAt];
+    _font = [[NSString alloc]initWithString:font? font:_defaultFont];
 
     return self;
 }
@@ -43,6 +60,7 @@
         NSLog(@"-a, --at            schedule time if not 1:00 am");
         NSLog(@"-l, --lockscreen    run the lock screen module");
         NSLog(@"-p, --pin           set custom pin for lock screen");
+        NSLog(@"-f, --font          set font for lock screen");
         [NSApp terminate:nil];
 
     /**
@@ -57,7 +75,7 @@
      */
     } else if (_lockscreen) {
 
-        _window = [[LockWindow alloc] init];
+        _window = [[LockWindow alloc] initWithParent:self];
         [_window setDelegate:self];
 
     /**
@@ -72,7 +90,7 @@
      */
     } else {
 
-        _window = [[ImageWindow alloc] init];
+        _window = [[ImageWindow alloc] initWithParent:self];
         [_window setDelegate:self];
     }
     

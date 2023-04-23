@@ -8,8 +8,8 @@
 @interface LockWindow : NSWindow 
 
 
-- (instancetype)init;
-// - (instancetype)initWithParent: (AppDelegate*) parent;
+// - (instancetype)init;
+- (instancetype)initWithParent: (AppDelegate*) parent;
 - (BOOL)windowShouldClose:(id)sender;
 - (void)onTimerTick:(NSTimer*)timer;
 - (void)onTimerQuit:(NSTimer*)timer;

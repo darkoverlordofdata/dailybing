@@ -13,21 +13,34 @@
   BackView* _backView;
   NSTextField* _userName;
 
+
   NSTextField* _title;
   NSTextField* _description;
   NSTextField* _copyright;
   NSTextField* _currentDate;
   NSTextField* _currentTime;
   NSTextField* _instructions;
+
+  AppDelegate* _app;
+  NSString *_font;
+  NSString *_pin;
+
 }
 
 
 /**
  *  Type Constructor
  */
-- (instancetype)init
+// - (instancetype)init
+- (instancetype)initWithParent: (AppDelegate*) app
 {
 
+  _app = app;
+  _font = [app font];
+  _pin = [app pin];
+
+  NSLog(@"Using font: %@", _font);
+  NSLog(@"Using pin: %@", _pin);
   _counter = 0;
   _input = [NSString new];
   NSSize resolution = [[NSScreen mainScreen] frame].size;
@@ -42,6 +55,8 @@
    * Load the bundle data
    */
   NSString *bundlePath = [[NSBundle mainBundle] bundlePath]; 
+
+  NSLog(@"bundlePath: %@", bundlePath);
 
   NSString *locked = 
       [NSString stringWithFormat:@"%@/%@", bundlePath, @"Resources/themes/wallpaper.locked.jpg"];
@@ -103,7 +118,7 @@
       initWithFrame:NSMakeRect(resolution.width / 2 - ([fullName length] / 2) - [fullName length] * 5,
                                resolution.height*.5 - 80, 400, 24)]
       autorelease];
-  [_userName setFont:[NSFont fontWithName:@"SanFranciscoDisplay-Medium"
+  [_userName setFont:[NSFont fontWithName:_font
                                          size:24]];
   [_userName setStringValue:fullName];
   [_userName setBezeled:NO];
@@ -141,7 +156,7 @@
                                resolution.height / 3 - 24, 400, 96)]
       autorelease];
 
-  [_passcode setFont:[NSFont fontWithName:@"SanFranciscoDisplay-Medium" size:96]];
+  [_passcode setFont:[NSFont fontWithName:_font size:96]];
 
   //  Charcoal #36454f
   NSColor *charcoalColor = [NSColor colorWithDeviceRed:(float)0x36 / (float)255
@@ -163,14 +178,14 @@
    * Display instructions:
    *  Enter PIN
    */
-  NSFont *inFont = [NSFont fontWithName:@"SanFranciscoDisplay-Medium" size:24];
+  NSFont *inFont = [NSFont fontWithName:_font size:24];
   CGFloat inSize = [inFont widthOfString:@"Enter PIN"];
   _instructions = [[[NSTextField alloc]
       initWithFrame:NSMakeRect(resolution.width / 2 - (inSize / 2),
                                resolution.height / 3 - 80, 400, 24)]
       autorelease];
 
-  [_instructions setFont:[NSFont fontWithName:@"SanFranciscoDisplay-Medium"
+  [_instructions setFont:[NSFont fontWithName:_font
                                          size:24]];
   [_instructions setStringValue:@"Enter PIN"];
   [_instructions setBezeled:NO];
@@ -189,7 +204,7 @@
   _currentDate = [[[NSTextField alloc]
       initWithFrame:NSMakeRect(60, 80, 800, 64)] autorelease];
 
-  [_currentDate setFont:[NSFont fontWithName:@"SanFranciscoDisplay-Medium"
+  [_currentDate setFont:[NSFont fontWithName:_font
                                         size:64]];
   [_currentDate setBezeled:NO];
   [_currentDate setBezelStyle:NSTextFieldRoundedBezel];
@@ -208,7 +223,7 @@
   _currentTime = [[[NSTextField alloc]
       initWithFrame:NSMakeRect(60, 200, 800, 128)] autorelease];
 
-  [_currentTime setFont:[NSFont fontWithName:@"SanFranciscoDisplay-Medium"
+  [_currentTime setFont:[NSFont fontWithName:_font
                                         size:128]];
   [_currentTime setBezeled:NO];
   [_currentTime setBezelStyle:NSTextFieldRoundedBezel];
@@ -227,7 +242,7 @@
       initWithFrame:NSMakeRect(60, resolution.height - 80, 800, 32)]
       autorelease];
 
-  [_title setFont:[NSFont fontWithName:@"SanFranciscoDisplay-Medium" size:32]];
+  [_title setFont:[NSFont fontWithName:_font size:32]];
   [_title setBezeled:NO];
   [_title setBezelStyle:NSTextFieldRoundedBezel];
   [_title setDrawsBackground:NO];
@@ -245,7 +260,7 @@
       initWithFrame:NSMakeRect(60, resolution.height - 110, 800, 24)]
       autorelease];
 
-  [_description setFont:[NSFont fontWithName:@"SanFranciscoDisplay-Medium"
+  [_description setFont:[NSFont fontWithName:_font
                                         size:24]];
   [_description setBezeled:NO];
   [_description setBezelStyle:NSTextFieldRoundedBezel];
@@ -264,7 +279,7 @@
       initWithFrame:NSMakeRect(60, resolution.height - 140, 800, 18)]
       autorelease];
 
-  [_copyright setFont:[NSFont fontWithName:@"SanFranciscoDisplay-Medium"
+  [_copyright setFont:[NSFont fontWithName:_font
                                       size:18]];
   [_copyright setBezeled:NO];
   [_copyright setBezelStyle:NSTextFieldRoundedBezel];
@@ -420,13 +435,14 @@
 
       _input = [_input stringByAppendingString:str];
       [_passcode setStringValue:_input];
-      if ([_input isEqualToString:@"420420"]) {
+      if ([_input isEqualToString:_pin]) {
         _timer = [NSTimer scheduledTimerWithTimeInterval:0.25f
                                                  target:self
                                                selector:@selector(onTimerQuit:)
                                                userInfo:nil
                                                 repeats:NO];
       }
+
     }
   }
 }
