@@ -26,6 +26,7 @@
     _defaultPin = @"420420";
     _defaultAt = @"01:01";
     _defaultFont = @"SanFranciscoDisplay-Medium";
+    // _defaultFont = @"NimbusSans-Regular";
     return self;
 
 }

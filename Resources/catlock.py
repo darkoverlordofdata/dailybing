@@ -67,6 +67,11 @@ class CatLock(QWidget):
         # Create widget
         super().__init__()  
 
+        print(f'Resolution width: {width}, height: {height} ')
+        if height >=1280:
+            self.factor = 2
+        else:  
+            self.factor = 1.5
         self.lockedFlag = True
         self.counter = 0
         self.eol = 0
@@ -93,11 +98,12 @@ class CatLock(QWidget):
         self.count = 0
         self.pin = pin
         self.fontFamily = fontFamily
+        print("font = "+self.fontFamily)
         self.tz = tz
-        self.full_name = pwd.getpwuid(os.getuid()).pw_gecos
-        self.full_name = self.full_name.replace(",,,", "")
-        if self.full_name == "":
-            self.full_name = pwd.getpwuid(os.getuid()).pw_name
+        self.fullName = pwd.getpwuid(os.getuid()).pw_gecos
+        self.fullName = self.fullName.replace(",,,", "")
+        if self.fullName == "":
+            self.fullName = pwd.getpwuid(os.getuid()).pw_name
 
 
         with open(LOCAL + '/themes/wallpaper.description') as f:
@@ -106,8 +112,8 @@ class CatLock(QWidget):
             self.info = tmp.split("(©")[0]
             self.copyright = "(©" + tmp.split("(©")[1] + ")"
 
-        self.authorize = QPixmap(LOCAL + '/themes/wallpaper.authorize.jpg')
-        self.locked = QPixmap(LOCAL + '/themes/wallpaper.locked.jpg')
+        self.authorize = QPixmap(LOCAL + '/themes/wallpaper.authorize.jpg').scaled(width, height)
+        self.locked = QPixmap(LOCAL + '/themes/wallpaper.locked.jpg').scaled(width, height)
 
         self.setGeometry(self.left, self.top, self.width, self.height)
 
@@ -116,17 +122,15 @@ class CatLock(QWidget):
         else:
             self.avatar = QPixmap(LOCAL + '/avatar.png')
     
-        # fnt_60 = QFont(self.fontFamily, 60, QFont.Normal)
-        fnt_120 = QFont(self.fontFamily, 120, QFont.Normal)
-        fnt_64 = QFont(self.fontFamily, 64, QFont.Normal)
-        fnt_32 = QFont(self.fontFamily, 32, QFont.Normal)
-        fnt_24 = QFont(self.fontFamily, 24, QFont.Normal)
-        fnt_18 = QFont(self.fontFamily, 18, QFont.Normal)
+        clockFont = QFont(self.fontFamily, int(60*self.factor), QFont.Normal)
+        calendarFont = QFont(self.fontFamily, int(32*self.factor), QFont.Normal)
+        titleFont = QFont(self.fontFamily, int(16*self.factor), QFont.Normal)
+        infoFont = QFont(self.fontFamily, int(12*self.factor), QFont.Normal)
+        copyrightFont = QFont(self.fontFamily, 18, QFont.Normal)
 
-        fnt_30 = QFont(self.fontFamily, 30, QFont.Normal)
-        fnt_20 = QFont(self.fontFamily, 20, QFont.Normal)
-        fnt_12 = QFont(self.fontFamily, 12, QFont.Normal)
-        fnt_10 = QFont(self.fontFamily, 10, QFont.Normal)
+        textFont = QFont(self.fontFamily, 30, QFont.Normal)
+        nameFont = QFont(self.fontFamily, 20, QFont.Normal)
+        instructionFont = QFont(self.fontFamily, 10, QFont.Normal)
 
         self.background = QLabel(self)
         self.background.setPixmap(self.locked)
@@ -137,15 +141,15 @@ class CatLock(QWidget):
         self.userpic.setVisible(False)
 
         self.username = QLabel(self)
-        self.username.setFont(fnt_20)
-        self.username.setText(self.full_name)
-        self.username.move(int((self.width*.5)-(len(self.full_name)*.5)-(len(self.full_name)*6)), int(self.height*.666-80))
+        self.username.setFont(nameFont)
+        self.username.setText(self.fullName)
+        self.username.move(int((self.width*.5)-(len(self.fullName)*.5)-(len(self.fullName)*6)), int(self.height*.666-80))
         self.username.setStyleSheet("color: white")
         self.username.setVisible(False)
 
         self.textbox = QLineEdit(self)
         self.textbox.setEchoMode(QLineEdit.Password)
-        self.textbox.setFont(fnt_30)
+        self.textbox.setFont(textFont)
         
         x = int((self.width*.5)-125)
         y = int(self.height*.666)
@@ -154,42 +158,54 @@ class CatLock(QWidget):
         self.textbox.resize(280, 50)
         self.textbox.setVisible(False)
 
+        radius = 10
+        self.textbox.setStyleSheet(
+            """
+            color:rgba(54, 69, 79, 255);
+            background:rgba(250, 244, 211, 127);
+            border-top-left-radius:{0}px;
+            border-bottom-left-radius:{0}px;
+            border-top-right-radius:{0}px;
+            border-bottom-right-radius:{0}px;
+            """.format(radius)
+        )
+
         self.instructions = QLabel(self)
-        self.instructions.setFont(fnt_10)
+        self.instructions.setFont(instructionFont)
         self.instructions.setText("Enter PIN")
         self.instructions.move(int(self.width*.5)-30, int(self.height*.666+60))
         self.instructions.setVisible(False)
-        self.instructions.setStyleSheet("color: white")
+        self.instructions.setStyleSheet("color: white;" )
 
         self.titlebox = QLabel(self)
-        self.titlebox.setFont(fnt_32)
+        self.titlebox.setFont(titleFont)
         self.titlebox.setText(self.title)
         self.titlebox.move(60, 40)
-        self.titlebox.setStyleSheet("color: white")
+        self.titlebox.setStyleSheet("color: white;")
         self.titlebox.setFocusPolicy(Qt.ClickFocus | Qt.TabFocus | Qt.NoFocus)
 
+
         self.infobox = QLabel(self)
-        self.infobox.setFont(fnt_24)
+        self.infobox.setFont(infoFont)
         self.infobox.setText(self.info)
         self.infobox.move(60, 95)
-        self.infobox.setStyleSheet("color: white")
+        self.infobox.setStyleSheet("color: white;")
 
         self.copybox = QLabel(self)
-        self.copybox.setFont(fnt_18)
+        self.copybox.setFont(copyrightFont)
         self.copybox.setText(self.copyright[:-1])
         self.copybox.move(60, 140)
-        self.copybox.setStyleSheet("color: white")
+        self.copybox.setStyleSheet("color: white;")
 
         self.clock = QLabel(self)
-        self.clock.setFont(fnt_120)
+        self.clock.setFont(clockFont)
         # self.clock.move(60, int(self.height * 0.70))
         self.clock.move(60, int(self.height * 0.65))
-        self.clock.setStyleSheet("color: white")
-
+        self.clock.setStyleSheet("color: white;")
         self.calendar = QLabel(self)        
-        self.calendar.setFont(fnt_64)
+        self.calendar.setFont(calendarFont)
         self.calendar.move(60, int(self.height * 0.85))
-        self.calendar.setStyleSheet("color: white")
+        self.calendar.setStyleSheet("color: white;")
 
         self.showTime()
         self.clock.show()

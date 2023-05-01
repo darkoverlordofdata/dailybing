@@ -7,6 +7,7 @@
 #import <Cocoa/Cocoa.h>
 #import "ImageWindow.h"
 #import "../Extensions/NSImage+SaveAs.h"
+#import "../Extensions/NSImage+ResizeImage.h"
 
 @class ImageWindow;
 
