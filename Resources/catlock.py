@@ -159,7 +159,7 @@ class CatLock(QWidget):
         self.textbox.setVisible(False)
         self.textbox.setAlignment(Qt.AlignCenter)
 
-        radius = 7
+        radius = 10
         self.textbox.setStyleSheet(
             """
             color:rgba(54, 69, 79, 255);
