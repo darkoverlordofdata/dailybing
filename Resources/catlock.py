@@ -157,6 +157,7 @@ class CatLock(QWidget):
         self.textbox.move(x, y)
         self.textbox.resize(280, 50)
         self.textbox.setVisible(False)
+        self.textbox.setAlignment(Qt.AlignCenter)
 
         radius = 10
         self.textbox.setStyleSheet(

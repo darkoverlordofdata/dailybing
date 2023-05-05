@@ -19,12 +19,12 @@ openapp DailyBing --lockscreen --pin 123456
 ## build
 
 ```
-make
+gmake
 ```
 
 ## install
 ```
-sudo -E make install
+sudo -E gmake install
 ```
 
 or
@@ -38,11 +38,8 @@ exit
 or
 
 ```
-make install GNUSTEP_INSTALLATION_DOMAIN=USER
+gmake install GNUSTEP_INSTALLATION_DOMAIN=USER
 ```
 
 
 
-ImageWindow         DBWindow    
-ImageContainer      DBDataIndex
-ImagePanel          DBImageView
