@@ -1,4 +1,6 @@
 {
-    "cmake.configureOnOpen": false,
-    "extensions.ignoreRecommendations": true
+    "cmake.configureOnOpen": true,
+    // "extensions.ignoreRecommendations": true,
+    // "cmake.buildDirectory": "${workspaceRoot}/${workspaceFolderBasename}.app",
+    "cmake.buildDirectory": "${workspaceRoot}/DailyBing.app"
 }

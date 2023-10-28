@@ -1,0 +1,34 @@
+/usr/bin/clang  \
+    -I/usr/GNUstep/Local/Library/Headers \
+    -I/home/darko/Documents/GitHub/dailybing/./Source \
+    -x objective-c \
+    -O2 \
+    -pipe \
+    -std=c18 \
+    -Wall \
+    -Wno-psabi \
+    -Wno-import \
+    -Wno-nullability-completeness \
+    -fobjc-runtime=gnustep-2.1 \
+    -fblocks \
+    -fexceptions \
+    -fobjc-exceptions \
+    -fPIC \
+    -fstack-protector-strong \
+    -fno-strict-aliasing \
+    -fconstant-string-class=NSConstantString \
+    -DOBJC_RUNTIME=21 \
+    -DGNUSTEP \
+    -DGNUSTEP_BASE_LIBRARY=1 \
+    -DGNU_GUI_LIBRARY=1 \
+    -DGNUSTEP_RUNTIME=1 \
+    -D_NONFRAGILE_ABI=1 \
+    -D_NATIVE_OBJC_EXCEPTIONS \
+    -DGSWARN -DGSDIAGNOSE \
+    -g \
+    -std=gnu17 \
+    -MD \
+    -MT CMakeFiles/DailyBing.dir/Source/Extensions/NSImage+ProportionalScaling.m.o \
+    -MF CMakeFiles/DailyBing.dir/Source/Extensions/NSImage+ProportionalScaling.m.o.d \
+    -o CMakeFiles/DailyBing.dir/Source/Extensions/NSImage+ProportionalScaling.m.o \
+    -c /home/darko/Documents/GitHub/dailybing/Source/Extensions/NSImage+ProportionalScaling.m

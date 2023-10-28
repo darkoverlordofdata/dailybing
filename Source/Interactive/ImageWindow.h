@@ -4,7 +4,9 @@
  * BSD 2-Clause License
  */
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
+#import <AppKit/AppKit.h>
+// #import <Cocoa/Cocoa.h>
 #import "ImagePanel.h"
 #import "ImageContainer.h"
 #import "../AppDelegate.h"

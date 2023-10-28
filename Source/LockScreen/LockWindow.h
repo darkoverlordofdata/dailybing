@@ -1,4 +1,6 @@
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
+#import <AppKit/AppKit.h>
+// #import <Cocoa/Cocoa.h>
 #import "../Extensions/NSImage+ProportionalScaling.h"
 #import "BackView.h"
 #import "../AppDelegate.h"

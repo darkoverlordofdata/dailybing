@@ -4,7 +4,9 @@
  * BSD 2-Clause License
  */
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
+#import <AppKit/AppKit.h>
+// #import <Cocoa/Cocoa.h>
 #import "ImageWindow.h"
 #import "../Extensions/NSImage+SaveAs.h"
 #import "../Extensions/NSImage+ResizeImage.h"

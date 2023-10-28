@@ -1,3 +1,5 @@
+#include "AppKit/NSCell.h"
+#include "AppKit/NSText.h"
 #import <pwd.h>
 #import "LockWindow.h"
 
@@ -44,7 +46,7 @@
   _counter = 0;
   _input = [NSString new];
   NSSize resolution = [[NSScreen mainScreen] frame].size;
-  [super
+  self = [super
       initWithContentRect:NSMakeRect(0, 0, resolution.width, resolution.height)
                 styleMask:NSBorderlessWindowMask 
                   backing:NSBackingStoreBuffered 
@@ -86,6 +88,7 @@
   _wallpaperLocked = [[[NSImageView alloc]
       initWithFrame:NSMakeRect(0, 0, resolution.width, resolution.height)]
       autorelease];
+  [_wallpaperAuthorize setImageScaling: NSScaleNone];
   [_wallpaperLocked setImage:[[NSImage alloc] initWithContentsOfFile:locked]];
 
   /**
@@ -94,12 +97,15 @@
   _wallpaperAuthorize = [[[NSImageView alloc]
       initWithFrame:NSMakeRect(0, 0, resolution.width, resolution.height)]
       autorelease];
+  [_wallpaperAuthorize setImageScaling: NSScaleNone];
   [_wallpaperAuthorize setImage:[[NSImage alloc] initWithContentsOfFile:authorize]];
   [_wallpaperAuthorize setHidden:YES];
 
   [[self contentView] addSubview:_wallpaperLocked];
   [[self contentView] addSubview:_wallpaperAuthorize];
 
+  [self becomeMainWindow];
+  [self becomeKeyWindow];
   [self orderFrontRegardless];
   [self setLevel:NSScreenSaverWindowLevel - 1];
   [self setAutodisplay:YES];
@@ -172,6 +178,7 @@
   [_passcode setEditable:NO];
   [_passcode setSelectable:NO];
   [_passcode setHidden:YES];
+  [_passcode setAlignment:NSTextAlignmentCenter];
   [[self contentView] addSubview:_passcode];
 
   /*
@@ -357,7 +364,6 @@
 /**
  * onTimerQuit:timer
  */
-
 - (void)onTimerQuit:(NSTimer *)timer 
 {
   [[NSApplication sharedApplication] terminate:nil];
@@ -458,7 +464,6 @@
 /**
  * canBecomeMainWindow
  */
-
 - (BOOL)canBecomeMainWindow 
 {
   return YES;

@@ -7,7 +7,7 @@ To run interactively:
 ```
 openapp DailyBing
 ```
-To schedule daily download:
+To schedule daily download (not implemented):
 ```
 openapp DailyBing --schedule --at 03:01
 ```
