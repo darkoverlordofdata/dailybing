@@ -29,7 +29,7 @@
 - (instancetype)initWithFlags:(BOOL)help version:(BOOL)version schedule:(BOOL)schedule lockscreen:(BOOL)lockscreen pin:(NSString*)pin at:(NSString*)at font:(NSString*)font ;
 
 - (void)applicationDidFinishLaunching:(NSNotification *) not;
-
+- (void)applicationWillTerminate:(NSNotification *) not;
 
 @end
 

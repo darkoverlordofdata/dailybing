@@ -1,5 +1,5 @@
-#include "AppKit/NSCell.h"
-#include "AppKit/NSText.h"
+#import "AppKit/NSCell.h"
+#import "AppKit/NSText.h"
 #import <pwd.h>
 #import "LockWindow.h"
 
@@ -442,6 +442,13 @@
       _input = [_input stringByAppendingString:str];
       [_passcode setStringValue:_input];
       if ([_input isEqualToString:_pin]) {
+        
+        if ([[[[NSProcessInfo processInfo] environment] objectForKey:@"DESKTOP_SESSION"] isEqualToString:@"dde-x11"])
+        {
+          [NSTask launchedTaskWithLaunchPath:@"/usr/bin/dde-top-panel" arguments:@[]];        
+          [NSTask launchedTaskWithLaunchPath:@"/usr/bin/dde-dock" arguments:@[]];        
+        }        
+
         _timer = [NSTimer scheduledTimerWithTimeInterval:0.25f
                                                  target:self
                                                selector:@selector(onTimerQuit:)

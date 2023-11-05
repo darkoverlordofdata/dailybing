@@ -22,7 +22,8 @@ static const struct option longopts[] = {
     {"version", no_argument, NULL, 'v'},
     {"at", required_argument, NULL, 'a'},
     {"pin", required_argument, NULL, 'p'},
-    {"font", required_argument, NULL, 'f'}
+    {"font", required_argument, NULL, 'f'},
+    {"taask", required_argument, NULL, 't'}
 };
 
 
@@ -41,31 +42,42 @@ int main(int argc, char *argv[])
     NSString *at = @"";
     NSString *font = @"";
 
+    // NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
+
+    // NSString *aString = [standardDefaults stringForKey:@"aString"];
+    // NSInteger anInteger = [standardDefaults integerForKey:@"anInteger"];
+
+    // NSLog (@"aString argument: %@\nanInteger argument: %ld", aString, anInteger);
+    
+
     while ((opt = getopt_long(argc, argv, "hlsva:p:f:", longopts, &longindex))
           != -1) {
         switch (opt) {
-        case 'h':
+        case 'h':       //  --help
             help = YES;
-            break;
-        case 'l':
+            break;      
+        case 'l':       //  --lockscreen
             lockscreen = YES;
             break;
-        case 's':
+        case 's':       //  --schedule
             schedule = YES;
             break;
-        case 'v':
-            version = YES;
+        case 'v':       //  --version
+            version = YES;  
             break;
 
 
-        case 'a':
+        case 'a':       //  --at
             at = [NSString stringWithCString:optarg];
             break;
-        case 'p':
+        case 'p':       //  --pin
             pin = [NSString stringWithCString:optarg];
             break;
-        case 'f':
+        case 'f':       //  --font
             font = [NSString stringWithCString:optarg];
+            break;
+
+        case 't':       //  --task
             break;
 
         }

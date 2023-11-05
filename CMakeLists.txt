@@ -4,13 +4,7 @@ cmake_minimum_required ( VERSION 3.16 )
 #   Build dailybing
 #
 ###################################################################################
-###################################################################################
-#
-#   Experimental cmake build for CMake Tools tooling
-#
-###################################################################################
 project ( dailybing VERSION 0.0.1 )
-enable_language( OBJC )
 
 #
 set ( VERSION 0.0.1 )
@@ -18,103 +12,31 @@ set ( RELEASE_NAME dailybing )
 set ( PROJECT_NAME dailybing )
 set ( APP_NAME "DailyBing" )
 set ( CMAKE_EXPORT_COMPILE_COMMANDS ON )
-#
-# enable features
-#
+
 include ( CMakeToolsHelpers OPTIONAL )
+list ( APPEND CMAKE_MODULE_PATH ~/.local/lib/cmake/GNUstep )
+find_package ( GNUstep REQUIRED )
 
-#
-#   application source
-#
-set ( APP_SOURCE_FILES
-  Source/main.m
-  Source/Extensions/NSImage+ProportionalScaling.m
-  Source/Extensions/NSImage+ResizeImage.m
-  Source/Extensions/NSImage+SaveAs.m
-  Source/AppDelegate.m
-  Source/Interactive/ImageWindow.m
-  Source/Interactive/ImageContainer.m
-  Source/Interactive/ImagePanel.m
-  Source/LockScreen/BackView.m
-  Source/LockScreen/LockWindow.m
-)
+link_directories ( ${GNUSTEP_LIBRARY_DIRS} )
 
+include_directories ( AFTER ${GNUSTEP_INCLUDE_DIRS} )
 
-#
-#   application includes
-#
-set ( INCLUDES "${INCLUDES};/usr/include" )
-set ( INCLUDES "${INCLUDES};/usr/GNUstep/Local/Library/Headers" )
-set ( INCLUDES "${INCLUDES};/usr/local/include" )
-set ( INCLUDES "${INCLUDES};/usr/local/GNUstep/System/Library/Headers" )
-set ( INCLUDES "${INCLUDES};./Source" )
-#
-#   compiler options
-#
-
-set ( CMAKE_OBJC_FLAGS "${CMAKE_OBJC_FLAGS} -O2" )
-set ( CMAKE_OBJC_FLAGS "${CMAKE_OBJC_FLAGS} -pipe" )
-set ( CMAKE_OBJC_FLAGS "${CMAKE_OBJC_FLAGS} -std=c18" )
-set ( CMAKE_OBJC_FLAGS "${CMAKE_OBJC_FLAGS} -Wall" )
-set ( CMAKE_OBJC_FLAGS "${CMAKE_OBJC_FLAGS} -Wno-psabi" )
-set ( CMAKE_OBJC_FLAGS "${CMAKE_OBJC_FLAGS} -Wno-import" )
-set ( CMAKE_OBJC_FLAGS "${CMAKE_OBJC_FLAGS} -Wno-nullability-completeness" )
-
-IF(${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD")
-	set ( CMAKE_OBJC_FLAGS "${CMAKE_OBJC_FLAGS} -fobjc-runtime=gnustep-2.0" )
-ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD")
-
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-	set ( CMAKE_OBJC_FLAGS "${CMAKE_OBJC_FLAGS} -fobjc-runtime=gnustep-2.1" )
-ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-
-set ( CMAKE_OBJC_FLAGS "${CMAKE_OBJC_FLAGS} -fblocks" )
-# set ( CMAKE_OBJC_FLAGS "${CMAKE_OBJC_FLAGS} -fobjc-arc" )
-set ( CMAKE_OBJC_FLAGS "${CMAKE_OBJC_FLAGS} -fexceptions" )
-set ( CMAKE_OBJC_FLAGS "${CMAKE_OBJC_FLAGS} -fobjc-exceptions" )
-set ( CMAKE_OBJC_FLAGS "${CMAKE_OBJC_FLAGS} -fPIC" )
-set ( CMAKE_OBJC_FLAGS "${CMAKE_OBJC_FLAGS} -fstack-protector-strong" )
-set ( CMAKE_OBJC_FLAGS "${CMAKE_OBJC_FLAGS} -fno-strict-aliasing" )
-set ( CMAKE_OBJC_FLAGS "${CMAKE_OBJC_FLAGS} -fconstant-string-class=NSConstantString" )
-
-IF(${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD")
-	set ( CMAKE_OBJC_FLAGS "${CMAKE_OBJC_FLAGS} -DOBJC_RUNTIME=20" )
-ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD")
-
-IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-	set ( CMAKE_OBJC_FLAGS "${CMAKE_OBJC_FLAGS} -DOBJC_RUNTIME=21" )
-ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-
-set ( CMAKE_OBJC_FLAGS "${CMAKE_OBJC_FLAGS} -DGNUSTEP" )
-set ( CMAKE_OBJC_FLAGS "${CMAKE_OBJC_FLAGS} -DGNUSTEP_BASE_LIBRARY=1" )
-set ( CMAKE_OBJC_FLAGS "${CMAKE_OBJC_FLAGS} -DGNU_GUI_LIBRARY=1" )
-set ( CMAKE_OBJC_FLAGS "${CMAKE_OBJC_FLAGS} -DGNUSTEP_RUNTIME=1" )
-set ( CMAKE_OBJC_FLAGS "${CMAKE_OBJC_FLAGS} -D_NONFRAGILE_ABI=1" )
-set ( CMAKE_OBJC_FLAGS "${CMAKE_OBJC_FLAGS} -D_NATIVE_OBJC_EXCEPTIONS" )
-set ( CMAKE_OBJC_FLAGS "${CMAKE_OBJC_FLAGS} -DGSWARN" )
-set ( CMAKE_OBJC_FLAGS "${CMAKE_OBJC_FLAGS} -DGSDIAGNOSE" )
-
-
-# Libs: 
-link_directories ( "/usr/lib" )
-link_directories ( "/usr/GNUstep/Local/Library/Libraries" )
-# link_directories ( "/usr/local/lib" )
-# link_directories ( "/usr/local/GNUstep/System/Library/Libraries" )
-
-# definitions 
-include_directories ( AFTER ${INCLUDES} )
-
-#
-#   compile ccode & link executable
-#
 add_executable (
     ${APP_NAME}
-    ${APP_HEADER_FILES}
-    ${APP_SOURCE_FILES}
-)
+    Source/main.m
+    Source/Extensions/NSImage+ProportionalScaling.m
+    Source/Extensions/NSImage+ResizeImage.m
+    Source/Extensions/NSImage+SaveAs.m
+    Source/AppDelegate.m
+    Source/Interactive/ImageWindow.m
+    Source/Interactive/ImageContainer.m
+    Source/Interactive/ImagePanel.m
+    Source/LockScreen/BackView.m
+    Source/LockScreen/LockWindow.m
+  )
 
 
-target_link_libraries ( ${APP_NAME} m objc gnustep-base gnustep-gui pthread dispatch )
+target_link_libraries ( ${APP_NAME} ${GNUSTEP_LIBRARIES} )
 
 add_custom_command ( TARGET ${APP_NAME} PRE_BUILD
                       COMMAND ${CMAKE_COMMAND} -E copy_directory
@@ -145,5 +67,4 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 
 
-include ( CPack )
 

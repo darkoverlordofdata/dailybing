@@ -48,8 +48,15 @@
     return self;
 }
 
+- (void)applicationWillTerminate:(NSNotification *) not
+{
+    if (_lockscreen) {      
+        // [NSTask launchedTaskWithLaunchPath:@"/usr/bin/dde-top-panel" arguments:@[]];        
+        // [NSTask launchedTaskWithLaunchPath:@"/usr/bin/dde-dock" arguments:@[]];        
+    }
+}
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification;
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     /**
      * Display help message
@@ -76,6 +83,12 @@
      * Run LockScreen
      */
     } else if (_lockscreen) {
+
+        if ([[[[NSProcessInfo processInfo] environment] objectForKey:@"DESKTOP_SESSION"] isEqualToString:@"dde-x11"])
+        {
+            [NSTask launchedTaskWithLaunchPath:@"/usr/bin/pkill" arguments:[NSArray arrayWithObjects:@"dde-top-panel", nil]];        
+            [NSTask launchedTaskWithLaunchPath:@"/usr/bin/pkill" arguments:[NSArray arrayWithObjects:@"dde-dock", nil]];        
+        }        
 
         _window = [[LockWindow alloc] initWithParent:self];
         [_window setDelegate:self];
