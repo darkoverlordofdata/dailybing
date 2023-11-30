@@ -19,13 +19,18 @@
 	[super initWithContentRect:NSMakeRect(0, 0, 1920, 140) styleMask:NSWindowStyleMaskTitled | NSWindowStyleMaskClosable | NSWindowStyleMaskMiniaturizable | NSWindowStyleMaskResizable backing:NSBackingStoreBuffered defer:NO];
 	[self setTitle:@"Bing Picture Of the Day"];
 
-	if ([NSWindow instancesRespondToSelector:@selector(setIsVisible:)]) {
-		// Latest version on Linux has fixed this
+#if OBJC_RUNTIME==21
 		[self setIsVisible:YES];
-	} else {
-		// Latest version on FreeBSD doesn't have the fix yet...
+#else
   		[self orderFrontRegardless];
-	}
+#endif
+	// if ([NSWindow instancesRespondToSelector:@selector(setIsVisible:)]) {
+	// 	// Latest version on Linux has fixed this
+	// 	[self setIsVisible:YES];
+	// } else {
+	// 	// Latest version on FreeBSD doesn't have the fix yet...
+  	// 	[self orderFrontRegardless];
+	// }
 	return self;
 }
 

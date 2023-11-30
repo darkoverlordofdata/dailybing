@@ -390,19 +390,6 @@ def checkDownloadStatus(self, valid, dbus):
 
 
 if __name__ == '__main__':
-    #
-    # bail if already running:
-    #
-    # Simple singleton:
-    # Ensure that only one instance of this application is running by trying to kill the other ones
-    # p = QProcess()
-    # p.setProgram("pkill")
-    # p.setArguments(["-f", os.path.abspath(__file__)])
-    # cmd = p.program() + " " + " ".join(p.arguments())
-    # print(cmd)
-    # p.start()
-    # p.waitForFinished()
-
 
 
     usage = """Usage:
@@ -424,6 +411,9 @@ Application Options:
     valid = False
 
     app = QApplication(sys.argv)
+    # app = QtSingleApplication('6ca8b889-1e95-4f8e-9d55-f18624c9d188', sys.argv)
+    # if app.isRunning():
+    #     sys.exit(0)
 
 
     try:

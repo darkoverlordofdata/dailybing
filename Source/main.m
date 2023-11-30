@@ -16,6 +16,10 @@
  * Decode process arguments
  */
 static const struct option longopts[] = {
+    {"plank", no_argument, NULL, '1'},
+    {"Menu", no_argument, NULL, '2'},
+    {"dde-dock", no_argument, NULL, '3'},
+    {"dde-top-panel", no_argument, NULL, '4'},
     {"help", no_argument, NULL, 'h'},
     {"lockscreen", no_argument, NULL, 'l'},
     {"schedule", no_argument, NULL, 's'},
@@ -23,7 +27,7 @@ static const struct option longopts[] = {
     {"at", required_argument, NULL, 'a'},
     {"pin", required_argument, NULL, 'p'},
     {"font", required_argument, NULL, 'f'},
-    {"taask", required_argument, NULL, 't'}
+    {0,0,0,0}
 };
 
 
@@ -34,6 +38,10 @@ int main(int argc, char *argv[])
     [NSApplication sharedApplication];
 
     int longindex = -1, opt;
+    BOOL task_plank = NO;
+    BOOL task_Menu = NO;
+    BOOL task_dde_dock = NO;
+    BOOL task_dde_top_panel = NO;
     BOOL help = NO;
     BOOL version = NO;
     BOOL schedule = NO;
@@ -53,6 +61,20 @@ int main(int argc, char *argv[])
     while ((opt = getopt_long(argc, argv, "hlsva:p:f:", longopts, &longindex))
           != -1) {
         switch (opt) {
+
+        case '1':       // plank
+            task_plank = YES;
+            break;      
+        case '2':       // Menu
+            task_Menu = YES;
+            break;      
+        case '3':       // dde-dock
+            task_dde_dock = YES;
+            break;      
+        case '4':       // dde-top-panel
+            task_dde_top_panel = YES;
+            break;      
+
         case 'h':       //  --help
             help = YES;
             break;      
@@ -65,7 +87,6 @@ int main(int argc, char *argv[])
         case 'v':       //  --version
             version = YES;  
             break;
-
 
         case 'a':       //  --at
             at = [NSString stringWithCString:optarg];
@@ -84,7 +105,17 @@ int main(int argc, char *argv[])
    }
 
 
-    AppDelegate *controller = [[AppDelegate alloc]initWithFlags:help version:version schedule:schedule lockscreen:lockscreen pin:pin at:at font:font];
+    AppDelegate *controller = [[AppDelegate alloc]initWithFlags:help 
+                                                        version:version 
+                                                       schedule:schedule 
+                                                     lockscreen:lockscreen 
+                                                            pin:pin 
+                                                             at:at 
+                                                           font:font
+                                                          plank:task_plank
+                                                           menu:task_Menu
+                                                       dde_dock:task_dde_dock
+                                                  dde_top_panel:task_dde_top_panel];
     [[NSApplication sharedApplication] setDelegate: controller];
 
     NSApplicationMain(argc, (const char **)argv);

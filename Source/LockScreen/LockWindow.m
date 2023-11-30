@@ -107,7 +107,7 @@
   [self becomeMainWindow];
   [self becomeKeyWindow];
   [self orderFrontRegardless];
-  [self setLevel:NSScreenSaverWindowLevel - 1];
+  [self setLevel:NSScreenSaverWindowLevel];
   [self setAutodisplay:YES];
   [self makeFirstResponder:self];
   [self setExcludedFromWindowsMenu:YES];
@@ -443,11 +443,20 @@
       [_passcode setStringValue:_input];
       if ([_input isEqualToString:_pin]) {
         
-        if ([[[[NSProcessInfo processInfo] environment] objectForKey:@"DESKTOP_SESSION"] isEqualToString:@"dde-x11"])
-        {
-          [NSTask launchedTaskWithLaunchPath:@"/usr/bin/dde-top-panel" arguments:@[]];        
-          [NSTask launchedTaskWithLaunchPath:@"/usr/bin/dde-dock" arguments:@[]];        
-        }        
+        // if ([[[[NSProcessInfo processInfo] environment] objectForKey:@"DESKTOP_SESSION"] isEqualToString:@"dde-x11"])
+        // {
+          if (_app.plank)
+            [NSTask launchedTaskWithLaunchPath:@"/usr/local/bin/plank" arguments:@[]];        
+
+          if (_app.menu)
+            [NSTask launchedTaskWithLaunchPath:@"/System/Menu.app/Menu" arguments:@[]];        
+
+          if (_app.dde_top_panel)
+            [NSTask launchedTaskWithLaunchPath:@"/usr/bin/dde-top-panel" arguments:@[]];        
+
+          if (_app.dde_dock)
+            [NSTask launchedTaskWithLaunchPath:@"/usr/bin/dde-dock" arguments:@[]];        
+        // }        
 
         _timer = [NSTimer scheduledTimerWithTimeInterval:0.25f
                                                  target:self

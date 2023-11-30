@@ -1,5 +1,6 @@
 {
     "cmake.configureOnOpen": true,
+    "editor.inlayHints.enabled": "off",
     // "extensions.ignoreRecommendations": true,
     // "cmake.buildDirectory": "${workspaceRoot}/${workspaceFolderBasename}.app",
     "cmake.buildDirectory": "${workspaceRoot}/DailyBing.app"

@@ -93,11 +93,11 @@
     if ([[NSFileManager defaultManager] fileExistsAtPath: @"/usr/local/bin/launch"]) {
 
         // helloSystem
-        NSLog(@"/usr/local/bin/launch Filer --set-wallpaper %@", [NSString stringWithFormat:@"%@", wallpaperPicture]);
+        NSLog(@"/usr/local/bin/launch /System/Filer.app/Filer --set-wallpaper %@", [NSString stringWithFormat:@"%@", wallpaperPicture]);
         [NSTask launchedTaskWithLaunchPath:@"/usr/local/bin/launch" 
                 arguments:@[ 
                     @"/usr/local/bin/launch",
-                    @"Filer",
+                    @"/System/Filer.app/Filer",
                     @"--set-wallpaper", 
                     [NSString stringWithFormat:@"%@", wallpaperPicture]
                     ]];

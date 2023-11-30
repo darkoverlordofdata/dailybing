@@ -19,6 +19,10 @@
 @synthesize defaultPin = _defaultPin;
 @synthesize defaultAt = _defaultAt;
 @synthesize defaultFont = _defaultFont;
+@synthesize plank = _plank;
+@synthesize menu = _menu;
+@synthesize dde_dock = _dde_dock;
+@synthesize dde_top_panel = _dde_top_panel;
 
 
 - (instancetype) init
@@ -32,7 +36,17 @@
 }
 
 
-- (instancetype)initWithFlags:(BOOL)help version:(BOOL)version schedule:(BOOL)schedule lockscreen:(BOOL)lockscreen pin:(NSString*)pin at:(NSString*)at font:(NSString*)font
+- (instancetype)initWithFlags:(BOOL)help 
+                      version:(BOOL)version 
+                     schedule:(BOOL)schedule 
+                   lockscreen:(BOOL)lockscreen 
+                          pin:(NSString*)pin 
+                           at:(NSString*)at 
+                         font:(NSString*)font
+                        plank:(BOOL)plank
+                         menu:(BOOL)menu
+                     dde_dock:(BOOL)dde_dock
+                dde_top_panel:(BOOL)dde_top_panel;
 {
     self = [self init];
     
@@ -44,6 +58,11 @@
     _pin = [pin isEqualToString:@""]? _defaultPin : pin;
     _at = [at isEqualToString:@""]? _defaultAt : at;
     _font = [font isEqualToString:@""]? _defaultFont : font;
+
+    _plank = plank;
+    _menu = menu;
+    _dde_dock = dde_dock;
+    _dde_top_panel = dde_top_panel;
 
     return self;
 }
@@ -63,6 +82,10 @@
      */
     if (_help) {
         printf("Usage: openapp DailyBing [OPTION ...]\n");
+        printf("-1, --plank\n");
+        printf("-2, --Menu\n");
+        printf("-3, --dde-dock\n");
+        printf("-4, --dde-top-panel\n");
         printf("-h, --help          display this help message\n");
         printf("-v, --version       display version\n");
         printf("-s, --schedule      schedule download\n");
@@ -84,11 +107,21 @@
      */
     } else if (_lockscreen) {
 
-        if ([[[[NSProcessInfo processInfo] environment] objectForKey:@"DESKTOP_SESSION"] isEqualToString:@"dde-x11"])
-        {
-            [NSTask launchedTaskWithLaunchPath:@"/usr/bin/pkill" arguments:[NSArray arrayWithObjects:@"dde-top-panel", nil]];        
-            [NSTask launchedTaskWithLaunchPath:@"/usr/bin/pkill" arguments:[NSArray arrayWithObjects:@"dde-dock", nil]];        
-        }        
+        // if ([[[[NSProcessInfo processInfo] environment] objectForKey:@"DESKTOP_SESSION"] isEqualToString:@"dde-x11"])
+        // {
+            if (_plank)
+                [NSTask launchedTaskWithLaunchPath:@"/usr/bin/pkill" arguments:[NSArray arrayWithObjects:@"plank", nil]];        
+
+            if (_menu)
+                [NSTask launchedTaskWithLaunchPath:@"/usr/bin/pkill" arguments:[NSArray arrayWithObjects:@"Menu", nil]];        
+
+            if (_dde_dock)
+                [NSTask launchedTaskWithLaunchPath:@"/usr/bin/pkill" arguments:[NSArray arrayWithObjects:@"dde-dock", nil]];        
+
+            if (_dde_top_panel)
+                [NSTask launchedTaskWithLaunchPath:@"/usr/bin/pkill" arguments:[NSArray arrayWithObjects:@"dde-top-panel", nil]];        
+            
+        // }        
 
         _window = [[LockWindow alloc] initWithParent:self];
         [_window setDelegate:self];

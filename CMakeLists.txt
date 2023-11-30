@@ -14,7 +14,7 @@ set ( APP_NAME "DailyBing" )
 set ( CMAKE_EXPORT_COMPILE_COMMANDS ON )
 
 include ( CMakeToolsHelpers OPTIONAL )
-list ( APPEND CMAKE_MODULE_PATH ~/.local/lib/cmake/GNUstep )
+list ( APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/GNUstep )
 find_package ( GNUstep REQUIRED )
 
 link_directories ( ${GNUSTEP_LIBRARY_DIRS} )
