@@ -20,6 +20,7 @@ static const struct option longopts[] = {
     {"Menu", no_argument, NULL, '2'},
     {"dde-dock", no_argument, NULL, '3'},
     {"dde-top-panel", no_argument, NULL, '4'},
+    {"xfce4-panel", no_argument, NULL, '5'},
     {"help", no_argument, NULL, 'h'},
     {"lockscreen", no_argument, NULL, 'l'},
     {"schedule", no_argument, NULL, 's'},
@@ -42,6 +43,7 @@ int main(int argc, char *argv[])
     BOOL task_Menu = NO;
     BOOL task_dde_dock = NO;
     BOOL task_dde_top_panel = NO;
+    BOOL task_xfce4_panel = NO;
     BOOL help = NO;
     BOOL version = NO;
     BOOL schedule = NO;
@@ -58,7 +60,7 @@ int main(int argc, char *argv[])
     // NSLog (@"aString argument: %@\nanInteger argument: %ld", aString, anInteger);
     
 
-    while ((opt = getopt_long(argc, argv, "hlsva:p:f:", longopts, &longindex))
+    while ((opt = getopt_long(argc, argv, "12345hlsva:p:f:", longopts, &longindex))
           != -1) {
         switch (opt) {
 
@@ -73,6 +75,9 @@ int main(int argc, char *argv[])
             break;      
         case '4':       // dde-top-panel
             task_dde_top_panel = YES;
+            break;      
+        case '5':       // dde-top-panel
+            task_xfce4_panel = YES;
             break;      
 
         case 'h':       //  --help
@@ -115,7 +120,8 @@ int main(int argc, char *argv[])
                                                           plank:task_plank
                                                            menu:task_Menu
                                                        dde_dock:task_dde_dock
-                                                  dde_top_panel:task_dde_top_panel];
+                                                  dde_top_panel:task_dde_top_panel
+                                                    xfce4_panel:task_xfce4_panel];
     [[NSApplication sharedApplication] setDelegate: controller];
 
     NSApplicationMain(argc, (const char **)argv);

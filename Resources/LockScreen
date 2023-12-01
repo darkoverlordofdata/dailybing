@@ -1,7 +1,7 @@
 #!/bin/sh
-#pkill dde-top-panel &
-#pkill dde-dock &
+pkill xfce4-panel &
+pkill plank &
 openapp DailyBing --lockscreen --pin 420420
-#dde-dock & 
-#dde-top-panel &
+plank & 
+xfce4-panel &
 

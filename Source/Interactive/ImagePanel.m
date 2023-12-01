@@ -89,29 +89,6 @@
     [fh writeData:[now dataUsingEncoding:NSUTF8StringEncoding]];
     [fh closeFile];
 
-    // run external process to update the wallpaper location
-    if ([[NSFileManager defaultManager] fileExistsAtPath: @"/usr/local/bin/launch"]) {
-
-        // helloSystem
-        NSLog(@"/usr/local/bin/launch /System/Filer.app/Filer --set-wallpaper %@", [NSString stringWithFormat:@"%@", wallpaperPicture]);
-        [NSTask launchedTaskWithLaunchPath:@"/usr/local/bin/launch" 
-                arguments:@[ 
-                    @"/usr/local/bin/launch",
-                    @"/System/Filer.app/Filer",
-                    @"--set-wallpaper", 
-                    [NSString stringWithFormat:@"%@", wallpaperPicture]
-                    ]];
-    } else {
-
-        // Vanilla Gnome
-        [NSTask launchedTaskWithLaunchPath:@"/usr/bin/dconf" 
-                arguments:@[ 
-                    @"write", 
-                    @"/org/gnome/desktop/background/picture-uri", 
-                    [NSString stringWithFormat:@"\"file:\\%@\"", wallpaperPicture]
-                    ]];
-    }
-
     NSString *description = [NSString stringWithFormat:@"%@/%@", 
             [[NSBundle mainBundle] bundlePath], 
             @"Resources/themes/wallpaper.description"];
@@ -136,6 +113,29 @@
     [fd writeData:desc];
     [fd closeFile];
 
+
+    // run external process to update the wallpaper location
+    if ([[NSFileManager defaultManager] fileExistsAtPath: @"/usr/local/bin/launch"]) {
+
+        // helloSystem
+        NSLog(@"/usr/local/bin/launch /System/Filer.app/Filer --set-wallpaper %@", [NSString stringWithFormat:@"%@", wallpaperPicture]);
+        [NSTask launchedTaskWithLaunchPath:@"/usr/local/bin/launch" 
+                arguments:@[ 
+                    @"/usr/local/bin/launch",
+                    @"/System/Filer.app/Filer",
+                    @"--set-wallpaper", 
+                    [NSString stringWithFormat:@"%@", wallpaperPicture]
+                    ]];
+    } else {
+
+        // Vanilla Gnome
+        [NSTask launchedTaskWithLaunchPath:@"/usr/bin/dconf" 
+                arguments:@[ 
+                    @"write", 
+                    @"/org/gnome/desktop/background/picture-uri", 
+                    [NSString stringWithFormat:@"\"file:\\%@\"", wallpaperPicture]
+                    ]];
+    }
 
 }
 

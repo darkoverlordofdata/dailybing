@@ -28,6 +28,7 @@
 @property (assign, nonatomic) BOOL menu;
 @property (assign, nonatomic) BOOL dde_dock;
 @property (assign, nonatomic) BOOL dde_top_panel;
+@property (assign, nonatomic) BOOL xfce4_panel;
 
 
 // - (instancetype)initWithPin:(NSString*)pin at:(NSString*)at font:(NSString*)font;
@@ -41,7 +42,8 @@
                         plank:(BOOL)plank
                          menu:(BOOL)menu
                      dde_dock:(BOOL)dde_dock
-                dde_top_panel:(BOOL)dde_top_panel;
+                dde_top_panel:(BOOL)dde_top_panel
+                  xfce4_panel:(BOOL)xfce4_panel;
 
 - (void)applicationDidFinishLaunching:(NSNotification *) not;
 - (void)applicationWillTerminate:(NSNotification *) not;

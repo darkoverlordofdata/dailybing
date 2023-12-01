@@ -47,10 +47,11 @@
   _input = [NSString new];
   NSSize resolution = [[NSScreen mainScreen] frame].size;
   self = [super
-      initWithContentRect:NSMakeRect(0, 0, resolution.width, resolution.height)
+      initWithContentRect:NSMakeRect(0, 0, resolution.width, resolution.height  )
                 styleMask:NSBorderlessWindowMask 
                   backing:NSBackingStoreBuffered 
                     defer:NO];
+  [self setTitle:@"DailyBing_LockWindow"];
   
 
   /**
@@ -366,7 +367,7 @@
  */
 - (void)onTimerQuit:(NSTimer *)timer 
 {
-  [[NSApplication sharedApplication] terminate:nil];
+  [[NSApplication sharedApplication] terminate:self];
 }
 
 /**
@@ -377,12 +378,12 @@
   [self updateTime];
 
   _counter++;
-  if (_counter > 15) {
+  if (_counter > 60) {
       _input = [NSString new];
       [_passcode setStringValue:_input];
       [self setAppearance:YES];
       _counter = 0;
-      // [NSApp terminate:nil];
+      // [NSApp terminate:sender];
       return;
 
   }
@@ -445,6 +446,7 @@
         
         // if ([[[[NSProcessInfo processInfo] environment] objectForKey:@"DESKTOP_SESSION"] isEqualToString:@"dde-x11"])
         // {
+        @try {
           if (_app.plank)
             [NSTask launchedTaskWithLaunchPath:@"/usr/local/bin/plank" arguments:@[]];        
 
@@ -456,7 +458,14 @@
 
           if (_app.dde_dock)
             [NSTask launchedTaskWithLaunchPath:@"/usr/bin/dde-dock" arguments:@[]];        
-        // }        
+
+          if (_app.xfce4_panel)
+            [NSTask launchedTaskWithLaunchPath:@"/usr/local/bin/xfce4-panel" arguments:@[]]; 
+                   
+        } @catch (NSException *exception) {
+          NSLog(@"%@ ",exception.name);
+          NSLog(@"Reason: %@ ",exception.reason);
+        }        
 
         _timer = [NSTimer scheduledTimerWithTimeInterval:0.25f
                                                  target:self

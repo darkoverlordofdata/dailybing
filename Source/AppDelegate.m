@@ -23,6 +23,7 @@
 @synthesize menu = _menu;
 @synthesize dde_dock = _dde_dock;
 @synthesize dde_top_panel = _dde_top_panel;
+@synthesize xfce4_panel = _xfce4_panel;
 
 
 - (instancetype) init
@@ -46,7 +47,8 @@
                         plank:(BOOL)plank
                          menu:(BOOL)menu
                      dde_dock:(BOOL)dde_dock
-                dde_top_panel:(BOOL)dde_top_panel;
+                dde_top_panel:(BOOL)dde_top_panel
+                  xfce4_panel:(BOOL)xfce4_panel;
 {
     self = [self init];
     
@@ -63,6 +65,7 @@
     _menu = menu;
     _dde_dock = dde_dock;
     _dde_top_panel = dde_top_panel;
+    _xfce4_panel = xfce4_panel;
 
     return self;
 }
@@ -86,6 +89,7 @@
         printf("-2, --Menu\n");
         printf("-3, --dde-dock\n");
         printf("-4, --dde-top-panel\n");
+        printf("-5, --xfce4-panel\n");
         printf("-h, --help          display this help message\n");
         printf("-v, --version       display version\n");
         printf("-s, --schedule      schedule download\n");
@@ -121,6 +125,8 @@
             if (_dde_top_panel)
                 [NSTask launchedTaskWithLaunchPath:@"/usr/bin/pkill" arguments:[NSArray arrayWithObjects:@"dde-top-panel", nil]];        
             
+            if (_xfce4_panel)
+                [NSTask launchedTaskWithLaunchPath:@"/usr/local/bin/xfce4-panel" arguments:[NSArray arrayWithObjects:@"-q", nil]];        
         // }        
 
         _window = [[LockWindow alloc] initWithParent:self];
