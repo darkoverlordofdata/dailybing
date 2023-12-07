@@ -47,7 +47,7 @@
   _input = [NSString new];
   NSSize resolution = [[NSScreen mainScreen] frame].size;
   self = [super
-      initWithContentRect:NSMakeRect(0, 0, resolution.width, resolution.height  )
+      initWithContentRect:NSMakeRect(0, 0, resolution.width, resolution.height)
                 styleMask:NSBorderlessWindowMask 
                   backing:NSBackingStoreBuffered 
                     defer:NO];

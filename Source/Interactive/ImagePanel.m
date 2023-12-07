@@ -115,7 +115,19 @@
 
 
     // run external process to update the wallpaper location
-    if ([[NSFileManager defaultManager] fileExistsAtPath: @"/usr/local/bin/launch"]) {
+    if ([[[[NSProcessInfo processInfo] environment] objectForKey:@"DESKTOP_SESSION"] isEqualToString:@"xfce"]) {
+        [NSTask launchedTaskWithLaunchPath:@"/usr/local/bin/xfconf-query" 
+                arguments:@[ 
+                    @"/usr/local/bin/xfconf-query",
+                    @"-c",
+                    @"xfce4-desktop",
+                    @"-p",
+                    @"/backdrop/screen0/monitorHDMI-1/workspace0/last-image",
+                    @"-s", 
+                    [NSString stringWithFormat:@"%@", wallpaperPicture]
+                    ]];
+
+    } else if ([[NSFileManager defaultManager] fileExistsAtPath: @"/usr/local/bin/launch"]) {
 
         // helloSystem
         NSLog(@"/usr/local/bin/launch /System/Filer.app/Filer --set-wallpaper %@", [NSString stringWithFormat:@"%@", wallpaperPicture]);

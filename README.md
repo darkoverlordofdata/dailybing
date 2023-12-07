@@ -61,4 +61,4 @@ cmake --build DailyBing.app --target install
 --dde-dock
 --Menu
 --plank
-
+--xfce4-panel

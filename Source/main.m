@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
         case '4':       // dde-top-panel
             task_dde_top_panel = YES;
             break;      
-        case '5':       // dde-top-panel
+        case '5':       // xfce4-panel
             task_xfce4_panel = YES;
             break;      
 
