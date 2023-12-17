@@ -43,22 +43,7 @@ gmake install GNUSTEP_INSTALLATION_DOMAIN=USER
 
 
 
-pkill dde-top-panel;pkill dde-dock;openapp DailyBing --lockscreen --pin 420420;dde-dock & dde-top-panel &
 
-sh /usr/GNUstep/Local/Applications/DailyBing.app/Resources/LockScreen
+![alt lock](https://github.com/darkoverlordofdata/SimpleTextEditor/blob/main/2023-12-16-160536_1920x1080_scrot.png?raw=true)
 
-
-openapp DailyBing --lockscreen --pin 420420 --dde-top-panel --dde-dock
-
-openapp DailyBing --lockscreen --pin 420420 --Menu --plank
-
-cmake --build DailyBing.app
-cmake --build DailyBing.app --target install
-
-
-
---dde-top-panel
---dde-dock
---Menu
---plank
---xfce4-panel
+![alt authorize](https://github.com/darkoverlordofdata/SimpleTextEditor/blob/main/2023-12-16-161309_1920x1080_scrot.png?raw=true)
